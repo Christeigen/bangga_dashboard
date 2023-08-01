@@ -1,7 +1,13 @@
-import barataLogo from '/src/assets/barata.png'
-import { useState } from 'react'
+// import barataLogo from '/src/assets/barata.png'
+import { useState, useContext } from 'react'
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "/src/firebase"
+import { useNavigate } from 'react-router-dom'
+import { AuthContext } from '../context/AuthContext';
 
 const Login = () => {
+
+    const {dispatch} = useContext(AuthContext)
 
     // Handle Login Form
     const [formData, setFormData] = useState(
@@ -23,10 +29,25 @@ const Login = () => {
         console.log(formData)
     }
 
-    function handleSubmit(event) {
+    const navigate = useNavigate()
+
+    function handleLogin(event) {
         event.preventDefault()
-        // submitToApi(formData)
-        console.log(formData)
+        let email = formData.username
+        console.log(email)
+        let password = formData.password
+        console.log(password)
+
+        signInWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                const user = userCredential.user;
+                console.log(user)
+                dispatch({type:"LOGIN", payload:user})
+                navigate('/')
+            })
+            .catch((error) => {
+                setError(true);
+            });
     }
 
     // Hide Password
@@ -38,17 +59,22 @@ const Login = () => {
         setHidePw((pw) => !pw); 
     }
 
+    // Error
+
+    const [error,setError] = useState(false)
+
+
     return (
     <>
         <div className="form_container absolute max-w-sm w-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 scale-100 z-101 bg-white p-7 pt-9 rounded-lg shadow-xl shadow-slate-300">
             <form action="{% url 'login' %}" method="POST">
 
-                <a href="https://www.barata.id/" target="blank">
-                    <img src={barataLogo} className="logo barata w-2/5 m-auto my-8" alt="Barata logo" />
-                </a>
+                {/* <a href="https://www.barata.id/" target="blank">
+                    <img src={barataLogo} className="logo barata w-2/5 m-auto my-10" alt="Barata logo" />
+                </a> */}
 
                 <h2 className="font-nunito text-2xl font-extrabold mb-2">Welcome!</h2>
-                <h4 className="font-nunito font-normal  text-gray-400">Please log-in to your account and access the dashboard</h4>
+                <h4 className="font-nunito font-normal  text-gray-400">Please log-in to your account to access the dashboard</h4>
         
                 <div className="input_box relative mt-8 w-full h-10">
                     <input type="username" 
@@ -75,12 +101,14 @@ const Login = () => {
                     className= {`uil ${pw === true ? "uil-eye-slash" : "uil-eye"} pw_hide absolute top-1/2 transform -translate-y-1/2 text-gray-700 text-base right-0 cursor-pointer`}></i>
                 </div>
         
-                <button onClick = {handleSubmit}
+                <button onClick = {handleLogin}
                 className="button bg-blue-950 hover:bg-black text-white font-bold py-2 px-4 rounded-full mt-8 w-full font-nunito" id="loginnow" type="submit">
                     Login Now
                 </button>
         
             </form>
+
+            {error && <div className = "mx-15 mt-4 text-center text-sm text-red-600">Wrong email or password!</div>}
         </div>
     </>
   )
