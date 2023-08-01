@@ -1,11 +1,10 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 
-const api_key = JSON.stringify(import.meta.env.VITE_REACT_APP_FIREBASE_KEY)
-console.log(api_key)
+const firebaseKey = import.meta.env.VITE_REACT_APP_FIREBASE_KEY;
 
 const firebaseConfig = {
-  // apiKey: api_key,
+  apiKey: firebaseKey,
   authDomain: "chargingstation-17519.firebaseapp.com",
   projectId: "chargingstation-17519",
   storageBucket: "chargingstation-17519.appspot.com",
