@@ -4,8 +4,6 @@ import {BsEvStationFill, BsBugFill, BsBarChartFill} from "react-icons/bs"
 
 export default function Widget({type, source}) {
 
-
-
     let data
 
     switch (type) {

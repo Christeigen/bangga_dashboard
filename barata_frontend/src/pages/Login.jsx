@@ -46,6 +46,9 @@ const Login = () => {
                 navigate('/')
             })
             .catch((error) => {
+                console.log(error)
+                const error_message = error.message
+                setErrorMessage(error_message)
                 setError(true);
             });
     }
@@ -62,16 +65,13 @@ const Login = () => {
     // Error
 
     const [error,setError] = useState(false)
+    const [errorMessage, setErrorMessage] = useState("");
 
 
     return (
     <>
         <div className="form_container absolute max-w-sm w-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 scale-100 z-101 bg-white p-7 pt-9 rounded-lg shadow-xl shadow-slate-300">
             <form action="{% url 'login' %}" method="POST">
-
-                {/* <a href="https://www.barata.id/" target="blank">
-                    <img src={barataLogo} className="logo barata w-2/5 m-auto my-10" alt="Barata logo" />
-                </a> */}
 
                 <h2 className="font-nunito text-2xl font-extrabold mb-2">Welcome!</h2>
                 <h4 className="font-nunito font-normal  text-gray-400">Please log-in to your account to access the dashboard</h4>
@@ -108,7 +108,7 @@ const Login = () => {
         
             </form>
 
-            {error && <div className = "mx-15 mt-4 text-center text-sm text-red-600">Wrong email or password!</div>}
+            {error && <div className = "mx-15 mt-4 text-center text-sm text-red-600"> {errorMessage} </div>}
         </div>
     </>
   )

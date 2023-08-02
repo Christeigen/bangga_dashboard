@@ -8,9 +8,18 @@ dependencies:
   bootstrap:
     specifier: ^5.3.1
     version: 5.3.1(@popperjs/core@2.11.8)
+  chart.js:
+    specifier: ^4.3.2
+    version: 4.3.2
+  chartjs-adapter-date-fns:
+    specifier: ^3.0.0
+    version: 3.0.0(chart.js@4.3.2)(date-fns@2.30.0)
   classnames:
     specifier: ^2.3.2
     version: 2.3.2
+  date-fns:
+    specifier: ^2.30.0
+    version: 2.30.0
   dotenv:
     specifier: ^16.3.1
     version: 16.3.1
@@ -23,6 +32,9 @@ dependencies:
   react-bootstrap:
     specifier: ^2.8.0
     version: 2.8.0(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0)
+  react-chartjs-2:
+    specifier: ^5.2.0
+    version: 5.2.0(chart.js@4.3.2)(react@18.2.0)
   react-dom:
     specifier: ^18.2.0
     version: 18.2.0(react@18.2.0)
@@ -2348,6 +2360,10 @@ packages:
       '@jridgewell/resolve-uri': 3.1.0
       '@jridgewell/sourcemap-codec': 1.4.14
 
+  /@kurkle/color@0.3.2:
+    resolution: {integrity: sha512-fuscdXJ9G1qb7W8VdHi+IwRqij3lBkosAm4ydQtEmbY58OzHXqQhvlxqEkoz0yssNVn38bcpRWgA9PP+OGoisw==}
+    dev: false
+
   /@nodelib/fs.scandir@2.1.5:
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
     engines: {node: '>= 8'}
@@ -3302,6 +3318,23 @@ packages:
       ansi-styles: 4.3.0
       supports-color: 7.2.0
 
+  /chart.js@4.3.2:
+    resolution: {integrity: sha512-pvQNyFOY1QmbmIr8oDORL16/FFivfxj8V26VFpFilMo4cNvkV5WXLJetDio365pd9gKUHGdirUTbqJfw8tr+Dg==}
+    engines: {pnpm: '>=7'}
+    dependencies:
+      '@kurkle/color': 0.3.2
+    dev: false
+
+  /chartjs-adapter-date-fns@3.0.0(chart.js@4.3.2)(date-fns@2.30.0):
+    resolution: {integrity: sha512-Rs3iEB3Q5pJ973J93OBTpnP7qoGwvq3nUnoMdtxO+9aoJof7UFcRbWcIDteXuYd1fgAvct/32T9qaLyLuZVwCg==}
+    peerDependencies:
+      chart.js: '>=2.8.0'
+      date-fns: '>=2.0.0'
+    dependencies:
+      chart.js: 4.3.2
+      date-fns: 2.30.0
+    dev: false
+
   /chokidar@3.5.3:
     resolution: {integrity: sha512-Dr3sfKRP6oTcjf2JmUmFJfeVMvXBdegxB0iVQ5eb2V10uFJUCAS8OByZdVAyVb8xXNz3GjjTgj9kLWsZTqE6kw==}
     engines: {node: '>= 8.10.0'}
@@ -3578,6 +3611,13 @@ packages:
   /d3-timer@3.0.1:
     resolution: {integrity: sha512-ndfJ/JxxMd3nw31uyKoY2naivF+r29V+Lc0svZxe1JvvIRmi8hUsrMvdOwgS1o6uBHmiz91geQ0ylPP0aj1VUA==}
     engines: {node: '>=12'}
+    dev: false
+
+  /date-fns@2.30.0:
+    resolution: {integrity: sha512-fnULvOpxnC5/Vg3NCiWelDsLiUc9bRwAPs/+LfTLNvetFCtCTN+yQz15C/fs4AwX1R9K5GLtLfn8QW+dWisaAw==}
+    engines: {node: '>=0.11'}
+    dependencies:
+      '@babel/runtime': 7.22.6
     dev: false
 
   /dayjs@1.11.9:
@@ -5967,6 +6007,16 @@ packages:
       react-transition-group: 4.4.5(react-dom@18.2.0)(react@18.2.0)
       uncontrollable: 7.2.1(react@18.2.0)
       warning: 4.0.3
+    dev: false
+
+  /react-chartjs-2@5.2.0(chart.js@4.3.2)(react@18.2.0):
+    resolution: {integrity: sha512-98iN5aguJyVSxp5U3CblRLH67J8gkfyGNbiK3c+l1QI/G4irHMPQw44aEPmjVag+YKTyQ260NcF82GTQ3bdscA==}
+    peerDependencies:
+      chart.js: ^4.1.1
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      chart.js: 4.3.2
+      react: 18.2.0
     dev: false
 
   /react-devtools-core@4.28.0:

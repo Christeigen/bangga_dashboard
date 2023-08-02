@@ -1,4 +1,5 @@
 import Chart from "/src/components/chart/Chart";
+import LineChart from "/src/components/chart/LineChart";
 import Widget from "/src/components/widget/Widget";
 import Table from "/src/components/table/Table";
 import { getDatabase, ref, onValue} from 'firebase/database'
@@ -22,7 +23,7 @@ export default class Dashboard extends React.Component {
   }
 
   componentDidMount() {
-    const bookDataPromise = this.fetchDataFromTable('book');
+    const bookDataPromise = this.fetchDataFromTable('book', { sort: true });
     const chargingstationDataPromise = this.fetchDataFromTable('charging_station');
     const userDataPromise = this.fetchDataFromTable('users');
 
@@ -49,7 +50,7 @@ export default class Dashboard extends React.Component {
     }
   }
 
-  fetchDataFromTable(tableName) {
+  fetchDataFromTable(tableName, options = {}) {
     const dbRef = ref(db, tableName);
 
     return new Promise((resolve, reject) => {
@@ -60,6 +61,15 @@ export default class Dashboard extends React.Component {
           let data = childSnapshot.val();
           records.push({ key: keyName, data: data });
         });
+
+        if (options.sort) {
+          records.sort((a, b) => {
+            const dateA = new Date(a.data.orderDate);
+            const dateB = new Date(b.data.orderDate);
+            return dateA - dateB;
+          });
+        }
+
         resolve(records);
       }, reject);
     });
@@ -110,11 +120,13 @@ export default class Dashboard extends React.Component {
           <Table 
             source = {bookData} 
             columns = {active_user_data} 
-            title = {'Last active user'} 
+            title = {'Last user'} 
             shuffle = {true}
             filter = {5}
           />
-          <Chart title="Last 6 Months (Revenue)" aspect={2 / 1} />
+          <LineChart 
+            source = {bookData}
+            title = {'Transaction History'} />
         </div>
 
         <div className="flex gap-5 mx-2">

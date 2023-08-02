@@ -13,7 +13,8 @@ export default function Table({ source, columns, title, shuffle, filter }) {
   }
 
   return (
-    <div className="bg-white p-5 rounded-lg shadow-sm">
+    // flex-1 perhatiin
+    <div className="bg-white p-5 rounded-lg shadow-sm flex-1"> 
       <div className="px-1 pb-2 text-stone-500 text-[17px]">{title}</div>
       <table>
         <thead>
