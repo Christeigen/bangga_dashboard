@@ -39,42 +39,10 @@ export default function LineChart({source, title}) {
       }, []);
     }
 
-    // Example usage based on user input
-    const userInput = "day"; // Replace with user input ('week', 'day', or 'month')
-
-
-    const chartData = {
-
-        datasets: [
-          {
-            label: 'Price',
-            data: groupAndSumData(source, userInput),
-            borderColor: 'rgb(30 58 138)',
-            borderWidth: 1,
-          },
-        ],
-      };
-
-    const chartOptions = {
-        scales: {
-          x: {
-            type: 'time',
-            time: {
-                unit:'day',
-            },
-          },
-        },
-        plugins: {
-          legend: {
-            display: false
-          }
-        }
-      };
-
-      const [formData, setFormData] = useState(
-        {
-          period: "day"
-        }
+    const [formData, setFormData] = useState(
+      {
+        period: "day"
+      }
     )
     
     function handleChange(event) {
@@ -86,13 +54,43 @@ export default function LineChart({source, title}) {
             }
         })
     }
+
+    const chartData = {
+
+        datasets: [
+          {
+            label: 'Price',
+            data: groupAndSumData(source, formData.period),
+            borderColor: 'rgb(30 58 138)',
+            borderWidth: 1,
+          },
+        ],
+      };
+
+    const chartOptions = {
+        scales: {
+          x: {
+            type: 'time',
+            time: {
+                unit:formData.period,
+            },
+          },
+        },
+        plugins: {
+          legend: {
+            display: false
+          }
+        }
+      };
+
+
     
     return (
         <div className="bg-white p-5 rounded-lg shadow-sm flex-1"> 
           <div className = "flex justify-between">
             <div className = "px-1 pb-2 text-stone-500 text-[17px]">{title}</div>
             <select
-                className = "text-sm"
+                className = "text-sm outline-none"
                 id="period" 
                 value={formData.period}
                 onChange={handleChange}

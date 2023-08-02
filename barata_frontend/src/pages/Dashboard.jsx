@@ -1,5 +1,6 @@
 import Chart from "/src/components/chart/Chart";
 import LineChart from "/src/components/chart/LineChart";
+import Map from "/src/components/chart/Map";
 import Widget from "/src/components/widget/Widget";
 import Table from "/src/components/table/Table";
 import { getDatabase, ref, onValue} from 'firebase/database'
@@ -94,6 +95,7 @@ export default class Dashboard extends React.Component {
 
   render() {
     const { bookData, chargingstationData, userData, loading } = this.state;
+    
 
     if (loading) {
       return <p className = "px-2">Loading...</p>;
@@ -130,8 +132,13 @@ export default class Dashboard extends React.Component {
         </div>
 
         <div className="flex gap-5 mx-2">
-          <Chart title="Last 6 Months (Revenue)" aspect={2 / 1} />
-          <Chart title="Last 6 Months (Revenue)" aspect={2 / 1} />
+          <div className = " bg-white w-full my-5 rounded-lg shadow-sm px-5">
+            <div className = "mt-5 text-stone-500 text-[17px]">
+              Charging Station Location Map
+            </div>
+            <Map
+              source = {chargingstationData}/>
+          </div>
         </div>
       </>
     )
