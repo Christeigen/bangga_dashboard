@@ -13,6 +13,8 @@ export default function Dashboard() {
       { key: 'customerId', label: 'Customer ID' },
       { key: 'csId', label: 'Station ID' },
       { key: 'orderDate', label: 'Order Date' },
+      { key: 'totalPrice', label: 'Price'},
+      { key: 'duration', label: 'duration'}
   ];
 
   return (

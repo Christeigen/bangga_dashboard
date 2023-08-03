@@ -17,7 +17,7 @@ export default function Layout() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [bookData, chargingstationData, userData] = await Promise.all([
+        const [bookData, chargingstationData, userData ] = await Promise.all([
           fetchDataFromTable('book', { sort: true }),
           fetchDataFromTable('charging_station'),
           fetchDataFromTable('users'),
@@ -101,7 +101,7 @@ export default function Layout() {
       <div className="flex flex-col flex-1">
         <Header notif={notificationMessages} />
         <div className="flex-1 p-4 min-h-0 overflow-auto">
-          <Outlet context = {[bookData, chargingstationData, userData]}/>
+          <Outlet context = {[bookData, chargingstationData, userData ]}/>
         </div>
       </div>
     </div>
