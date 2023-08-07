@@ -7,7 +7,7 @@ import { useOutletContext } from "react-router-dom";
 
 export default function Dashboard() {
     
-  const [ bookData, chargingstationData, userData ] = useOutletContext()
+  const [ tableData, bookData, chargingstationData, userData ] = useOutletContext()
 
   const active_user_data = [
       { key: 'customerId', label: 'Customer ID' },
@@ -48,6 +48,9 @@ export default function Dashboard() {
               source = {chargingstationData}/>
           </div>
         </div>
+        <script>
+          console.log(tableData)
+        </script>
       </>
   )
 }

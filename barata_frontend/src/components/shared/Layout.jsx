@@ -7,12 +7,30 @@ import { app } from '/src/firebase';
 
 const db = getDatabase(app);
 
+function groupAndSumData(data) {
+  return data.reduce((acc, item) => {
+    const x = item.data.customerId;
+    const y = item.data.totalPrice;
+    const z = item.data.duration;
+    const existingCustomerId = acc.find(a => a.customerId === item.x);
+    if (existingCustomerId) {
+      existingCustomerId.y += y;
+      existingCustomerId.z += z;
+    } else {
+      acc.push({ x, y, z });
+    }
+
+    return acc;
+  }, []);
+};
+
 export default function Layout() {
   const [bookData, setBookData] = useState([]);
   const [chargingstationData, setChargingstationData] = useState([]);
   const [userData, setUserData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [notificationMessages, setNotificationMessages] = useState([]);
+  const [tableData, setTableData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,6 +44,8 @@ export default function Layout() {
         setBookData(bookData);
         setChargingstationData(chargingstationData);
         setUserData(userData);
+        const tableData = groupAndSumData(bookData);
+        setTableData(tableData);
         setLoading(false);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -101,7 +121,7 @@ export default function Layout() {
       <div className="flex flex-col flex-1">
         <Header notif={notificationMessages} />
         <div className="flex-1 p-4 min-h-0 overflow-auto">
-          <Outlet context = {[bookData, chargingstationData, userData ]}/>
+          <Outlet context = {[tableData, bookData, chargingstationData, userData ]}/>
         </div>
       </div>
     </div>
