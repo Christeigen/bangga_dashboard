@@ -7,14 +7,12 @@ import { useOutletContext } from "react-router-dom";
 
 export default function Dashboard() {
     
-  const [ tableData, bookData, chargingstationData, userData ] = useOutletContext()
+  const [ bookData, chargingstationData, userData ] = useOutletContext()
 
   const active_user_data = [
       { key: 'customerId', label: 'Customer ID' },
-      { key: 'csId', label: 'Station ID' },
-      { key: 'orderDate', label: 'Order Date' },
-      { key: 'totalPrice', label: 'Price'},
-      { key: 'duration', label: 'duration'}
+      { key: 'duration', label: 'Total Duration'},
+      { key: 'totalPrice', label: 'Total Transaction'},
   ];
 
   return (
@@ -30,7 +28,7 @@ export default function Dashboard() {
           <Table 
             source = {bookData} 
             columns = {active_user_data} 
-            title = {'Last user'} 
+            title = {'Top Loyal Customers'} 
             shuffle = {true}
             filter = {5}
           />
@@ -48,9 +46,6 @@ export default function Dashboard() {
               source = {chargingstationData}/>
           </div>
         </div>
-        <script>
-          console.log(tableData)
-        </script>
       </>
   )
 }

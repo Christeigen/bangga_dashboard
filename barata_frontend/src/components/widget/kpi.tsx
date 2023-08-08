@@ -80,31 +80,77 @@ const customers = [
   },
 ];
 
+const churn = [
+  {
+    name: "Jakarta",
+    stat: "-6.3%",
+    status: "moderateDecrease",
+  },
+  {
+    name: "Bandung",
+    stat: "6.7%",
+    status: "increase",
+  },
+  {
+    name: "Surabaya",
+    stat: "2.9%",
+    status: "moderateIncrease",
+  },
+  {
+    name: "Semarang",
+    stat: "1.2%",
+    status: "unchanged",
+  },
+];
+
 const categories = [
   {
     title: "Sales",
-    metric: "Rp 23,456",
+    metric: "Rp 234,560",
+    metricPrev: "Rp 199,370",
+    delta: "10%",
     data: sales,
+    deltaType: "moderateIncrease", 
   },
   {
     title: "Profit",
-    metric: "Rp 16,450",
+    metric: "Rp 164,500",
+    metricPrev: "Rp 144,760",
+    delta: "12%",
     data: profit,
+    deltaType: "moderateIncrease",
   },
   {
     title: "Customers",
     metric: "456",
+    metricPrev: "387",
+    delta: "15%",
     data: customers,
+    deltaType: "moderateIncrease",
+  },
+  {
+    title: "Churn Rate",
+    metric: "15%",
+    metricPrev: "9%",
+    delta: "6%",
+    data: customers,
+    deltaType: "moderateDecrease",
   },
 ];
 
 export default function Example() {
   return (
-    <Grid numItemsSm={2} numItemsLg={3} className="gap-6">
+    <Grid numItemsSm={3} numItemsLg={4} className="gap-6">
       {categories.map((item) => (
         <Card key={item.title}>
-          <Text>{item.title}</Text>
-          <Metric>{item.metric}</Metric>
+          <Flex alignItems="start">
+            <Text>{item.title}</Text>
+            <BadgeDelta deltaType={item.deltaType}>{item.delta}</BadgeDelta>
+          </Flex>
+          <Flex justifyContent="start" alignItems="baseline" className="truncate space-x-3">
+            <Metric>{item.metric}</Metric>
+            <Text className="truncate">from {item.metricPrev}</Text>
+          </Flex>
           <Flex className="mt-6">
             <Text>
               <Bold>Province</Bold>
