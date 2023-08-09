@@ -1,6 +1,5 @@
 import { Line } from "react-chartjs-2"
 import {Chart as ChartJS} from 'chart.js/auto'
-// import { format } from 'date-fns';
 import 'chartjs-adapter-date-fns';
 import {useState} from 'react'
 
@@ -86,7 +85,7 @@ export default function LineChart({source, title}) {
 
     
     return (
-        <div className="bg-white p-5 rounded-lg shadow-sm flex-1"> 
+        <div className="bg-white p-5 rounded-lg drop-shadow-sm shadow-sm flex-1"> 
           <div className = "flex justify-between">
             <div className = "px-1 pb-2 text-stone-500 text-[17px]">{title}</div>
             <select

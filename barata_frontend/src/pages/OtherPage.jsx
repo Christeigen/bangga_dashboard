@@ -1,4 +1,4 @@
-import Map from "/src/components/chart/Map";
+import Example from "/src/components/widget/kpi";
 import { useOutletContext } from "react-router-dom";
 
 export default function OtherPage() {
@@ -7,7 +7,7 @@ export default function OtherPage() {
 
   return (
     <div className="flex gap-5 mx-2">
-      <Map source = {chargingstationData}/>
+      <Example/>
 
     </div>
   )

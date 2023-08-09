@@ -13,6 +13,7 @@ export default function Layout() {
   const [userData, setUserData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [notificationMessages, setNotificationMessages] = useState([]);
+  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,6 +28,7 @@ export default function Layout() {
         setChargingstationData(chargingstationData);
         setUserData(userData);
         setLoading(false);
+
       } catch (error) {
         console.error('Error fetching data:', error);
         setLoading(false);
@@ -83,6 +85,7 @@ export default function Layout() {
 
     setNotificationMessages(messages);
   };
+
 
   if (loading) {
     return <div className = "flex items-center justify-center h-screen">

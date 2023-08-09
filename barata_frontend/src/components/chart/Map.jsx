@@ -7,7 +7,7 @@ import "/src/index.css"
 
 const customIcon = new Icon({
   iconUrl: "https://cdn-icons-png.flaticon.com/512/447/447031.png",
-  iconSize: [38, 38] // size of the icon
+  iconSize: [35, 35] // size of the icon
 });
 
 const createClusterCustomIcon = function (cluster) {
@@ -34,7 +34,7 @@ export default function Map({source}) {
     console.log(center)
 
     return (
-        <MapContainer className = "text-black" center={center} zoom={13}>
+        <MapContainer className = "text-black" center={center} zoom={10}>
 
             <TileLayer 
             // attribution= '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'

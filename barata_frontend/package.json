@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tremor/cli": "^1.1.0",
+    "@tremor/react": "^3.6.0",
     "bootstrap": "^5.3.1",
     "chart.js": "^4.3.2",
     "chartjs-adapter-date-fns": "^3.0.0",
