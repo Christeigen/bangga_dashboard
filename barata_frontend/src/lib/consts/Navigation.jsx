@@ -22,12 +22,12 @@ export const DASHBOARD_SIDEBAR_LINKS = [
 		path: '/otherpage',
 		icon: <HiOutlineCube />
 	},
-	// {
-	// 	key: 'orders',
-	// 	label: 'Orders',
-	// 	path: '/orders',
-	// 	icon: <HiOutlineShoppingCart />
-	// },
+	{
+		key: 'downloadpage',
+		label: 'Download Report',
+		path: '/downloadreport',
+		icon: <HiOutlineShoppingCart />
+	},
 	// {
 	// 	key: 'customers',
 	// 	label: 'Customers',

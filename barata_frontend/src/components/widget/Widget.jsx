@@ -11,7 +11,7 @@ export default function Widget({type, source}) {
         data = {
             title: "Total Customers",
             description: "penjelasan untuk user",
-            value: Object.keys(source[0].data).length,
+            value: Array.isArray(source) ? source.length : 0,
             isMoney: false,
             link_label: "View all users",
             link_path: "",

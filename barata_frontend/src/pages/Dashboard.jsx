@@ -8,18 +8,10 @@ import { useOutletContext } from "react-router-dom";
 
 export default function Dashboard() {
     
-  const [ bookData, chargingstationData, userData, tableData] = useOutletContext()
-
-  // const active_user_data = [
-  //     { key: 'customerId', label: 'Customer ID' },
-  //     { key: 'csId', label: 'Station ID' },
-  //     { key: 'orderDate', label: 'Order Date' },
-  // ];
+  const [ bookData, chargingstationData, customerData] = useOutletContext()
 
   const active_user_data = [
       { key: 'customerId', label: 'Customer ID' },
-      // { key: 'csId', label: 'Station ID' },
-      // { key: 'orderDate', label: 'Order Date' },
       { key: 'duration', label: 'Duration' },
       { key: 'totalPrice', label: 'Total Transaction' },
   ];
@@ -27,19 +19,18 @@ export default function Dashboard() {
   return (
       <>
         <div className="flex gap-5 mx-2">
-          <Widget type="customer" source = {userData}/>
+          <Widget type="customer" source = {customerData}/>
           <Widget type="station" source = {chargingstationData}/>
           <Widget type="transaction" source = {bookData}/>
           <Widget type="bug" source = {bookData}/>
         </div>
 
         <div className="flex gap-5 mx-2">
-          <Table 
+          <Table
+            type = {'top_loyal_customer'} 
             source = {bookData} 
             columns = {active_user_data} 
             title = {'Last user'} 
-            shuffle = {true}
-            filter = {5}
           />
           <LineChart 
             source = {bookData}
