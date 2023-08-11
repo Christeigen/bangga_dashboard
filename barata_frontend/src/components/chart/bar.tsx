@@ -1,4 +1,5 @@
 import { Card, Title, BarChart, Subtitle } from "@tremor/react";
+import {useState} from 'react';
 
 const chartdata = [
   {
@@ -30,7 +31,7 @@ const MyBarChart = () => (
       data={chartdata}
       index="name"
       categories={["Total Sales"]}
-      colors={["indigo"]}
+      colors={["cyan"]}
       valueFormatter={dataFormatter}
       yAxisWidth={48}
     />

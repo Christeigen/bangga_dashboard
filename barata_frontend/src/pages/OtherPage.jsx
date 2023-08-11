@@ -1,5 +1,6 @@
 import Example from "/src/components/chart/kpi";
 import MyBarChart from "/src/components/chart/bar";
+import BarChart from "/src/components/chart/BarSen";
 import { useOutletContext } from "react-router-dom";
 import {
   Card,
@@ -15,7 +16,7 @@ import {
 
 export default function OtherPage() {
 
-  const [ bookData, chargingstationData, userData ] = useOutletContext()
+  const [ bookData ] = useOutletContext()
 
   return (
     <Grid numItemsMd={2} numItemsLg={1} className="gap-6 mt-6">
@@ -23,7 +24,7 @@ export default function OtherPage() {
       <Example/>
     </div>
     <div>
-      <MyBarChart/>
+      <senBarChart source = {bookData}/>
     </div>
     </Grid>
   )
