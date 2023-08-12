@@ -32,8 +32,6 @@ export default function Table({ source, columns, title, shuffle, filter }) {
   
 
   let data = groupAndSumData(dataToDisplay)
-  console.log(data)
-
 
   return (
     // flex-1 perhatiin
