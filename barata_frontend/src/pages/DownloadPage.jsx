@@ -1,11 +1,7 @@
 import { useOutletContext } from "react-router-dom";
 import {useState} from 'react'
 import Table from "/src/components/table/Table";
-// import { DateRangePicker, DateRangePickerItem, DateRangePickerValue } from "@tremor/react";
 import { DateRangePicker, DateRangePickerItem} from "@tremor/react";
-// import { es } from "date-fns/locale";
-
-
 
 export default function DownloadPage() {
 
@@ -37,7 +33,6 @@ export default function DownloadPage() {
       }
 
     let data
-    let outputArray
 
     switch (formData.database) {
       case "bookData":
@@ -55,7 +50,6 @@ export default function DownloadPage() {
             username: item.data[Object.keys(item.data)[0]].username
           }
         }));
-        console.log(data)
         break;
       case "mitraData":
         data = mitraData.map(item => ({
@@ -66,24 +60,21 @@ export default function DownloadPage() {
             username: item.data[Object.keys(item.data)[0]].username
           }
         }));
-        console.log(data)
         break;
       default:
         break;
     }
 
     const allColumns = [...new Set(data.flatMap(item => Object.keys(item.data)))];
-    console.log(allColumns)
 
     const selectedColumns = allColumns.map(key => ({
         key: key,
         label: key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, ' $1').trim(),
     }));
-    //   console.log(selectedColumns)
 
     return (
         <>
-        <div className="bg-blue-900 py-6 px-5 rounded-t-xl drop-shadow-sm shadow-sm mx-2 flex justify-between items-center text-white"> 
+        <div className="bg-blue-900 py-6 px-5 rounded-t-xl drop-shadow-sm shadow-sm mx-2 flex justify-between items-center text-white relative z-10"> 
             <div>
               database
               <select
@@ -102,7 +93,7 @@ export default function DownloadPage() {
 
             <div className = {`${formData.database !== 'bookData' ? 'hidden' : ''} text-sm`}>
               <DateRangePicker
-              className="max-w-md mx-auto bg-white text-black relative"
+              className="max-w-md mx-auto bg-white text-black"
               value={value}
               onValueChange={setValue}
               selectPlaceholder="All Data"
@@ -152,17 +143,14 @@ export default function DownloadPage() {
 
         </div>
 
-
-        {/* mt-64  */}
         <div className="mx-2"> 
             <Table
                 type = {'download_preview'} 
                 source = {data}
-                title={`${formData.database}${value.from ? ` (${value.from.toDateString()} - ${value.to.toDateString()})` : ' ( All Records )'}`}
+                title={`${formData.database}${formData.database === 'bookData' && value.from ? ` (${value.from.toDateString()} - ${value.to.toDateString()})` : ' ( All Records )'}`}
                 columns = {selectedColumns}
                 shuffle = {true}
-                datefilter = {value}
-                // filter = {5}
+                datefilter = {formData.database === 'bookData' ? value : ''}
             />
         </div>
         </>
