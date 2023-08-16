@@ -133,7 +133,7 @@ export default function Table({ type, source, columns, title, shuffle, filter, d
     formData.append('attachment', new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }), 'report.xlsx');
   
     // Send email request to Django API endpoint
-    axios.post('http://127.0.0.1:8000/send-email/', formData, {
+    axios.post('https://barata-backend.vercel.app/send-email/', formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
     })
       .then(response => {
