@@ -226,7 +226,6 @@ export default function Table({ type, source, columns, title, shuffle, filter, d
                 onChange={handleChange}
                 value={formEmail.subject}
                 className="w-full border rounded-md p-2 focus:border-blue-50"
-                // placeholder='Monthly Report Customer Data'
                 required
               />
             </div>

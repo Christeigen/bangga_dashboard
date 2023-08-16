@@ -18,3 +18,13 @@ class EmailAttachmentSerializer(serializers.Serializer):
     subject = serializers.CharField(max_length=200)
     message = serializers.CharField()
     attachment = serializers.FileField(required=False)
+
+class PaymentCreateSerializer(serializers.Serializer):
+    type = serializers.CharField(max_length=20)
+    user_number = serializers.CharField(max_length=20)
+
+    
+class PaymentRequestSerializer(serializers.Serializer):
+    payment_method_id = serializers.CharField(max_length=20)
+    amount = serializers.DecimalField(max_digits=10, decimal_places=2)
+

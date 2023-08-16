@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.core.mail import EmailMessage
-from .serializers import EmailAttachmentSerializer
+from .serializers import EmailAttachmentSerializer, PaymentCreateSerializer, PaymentRequestSerializer
 
 
 class BookDataView(APIView):
@@ -75,4 +75,31 @@ class SendEmailWithAttachment(APIView):
                 return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class PaymentCreateView(APIView):
+    def post(self, request, *args, **kwargs):
+        serializer = PaymentCreateSerializer(data=request.data)
+        if serializer.is_valid():
+
+            user_number = serializer.validated_data['user_number']
+            type = serializer.validated_data['type']
+
+            print(user_number,type)
+            return Response({"message": f"Payment using {type} with {user_number} is being created"}, status=status.HTTP_201_CREATED)
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+class PaymentRequestView(APIView):
+    def post(self, request, *args, **kwargs):
+        serializer = PaymentRequestSerializer(data=request.data)
+        if serializer.is_valid():
+
+            payment_method_id = serializer.validated_data['payment_method_id']
+            amount = serializer.validated_data['amount']
+
+            return Response({"message": f"Payment {payment_method_id} amounting to {amount} has been successfully requested"}, status=status.HTTP_201_CREATED)
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
