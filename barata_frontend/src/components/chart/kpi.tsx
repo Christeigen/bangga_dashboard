@@ -106,37 +106,52 @@ const churn = [
 const categories = [
   {
     title: "Sales",
-    metric: "Rp 234,560",
-    metricPrev: "Rp 199,370",
-    delta: "10%",
+    metric: 234560,
+    metricPrev: 199370,
+    delta: "0",
     data: sales,
     deltaType: "moderateIncrease", 
   },
   {
     title: "Profit",
-    metric: "Rp 164,500",
-    metricPrev: "Rp 144,760",
-    delta: "12%",
+    metric: 164500,
+    metricPrev: 144760,
+    delta: "0",
     data: profit,
     deltaType: "moderateIncrease",
   },
   {
     title: "Customers",
-    metric: "456",
-    metricPrev: "387",
-    delta: "15%",
+    metric: 456,
+    metricPrev: 387,
+    delta: "0",
     data: customers,
     deltaType: "moderateIncrease",
   },
   {
     title: "Churn Rate",
-    metric: "15%",
-    metricPrev: "9%",
-    delta: "6%",
+    metric: 9,
+    metricPrev: 15,
+    delta: "0",
     data: customers,
     deltaType: "moderateDecrease",
   },
 ];
+
+categories.forEach(category => {
+  const percentageChange = ((category.metric - category.metricPrev) / category.metricPrev) * 100;
+
+  if (percentageChange > 0) {
+    category.delta = `+${percentageChange.toFixed(2)}%`;
+    category.deltaType = "moderateIncrease";
+  } else if (percentageChange < 0) {
+    category.delta = `${percentageChange.toFixed(2)}%`;
+    category.deltaType = "moderateDecrease";
+  } else {
+    category.delta = "0.00%";
+    category.deltaType = "unchanged";
+  }
+});
 
 export default function Example() {
   return (
