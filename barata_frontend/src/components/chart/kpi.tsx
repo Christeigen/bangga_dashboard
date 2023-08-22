@@ -12,36 +12,71 @@ import {
 } from "@tremor/react";
 
 export default function Example({source}) {
-  const getTotalPriceForDateRange = (year, month, day) => {
-    const totalPrice = source
+  const totalValue = (year, month, day, criteria) => {
+    if (criteria == "totalPrice"){
+    const totalPrice = newData
       .filter(item => {
         const itemDate = new Date(item.data.orderDate);
         const startDate = new Date(year, month, 1);
         return itemDate >= startDate && itemDate <= new Date(year, month, day);
       })
       .reduce((total, item) => total + item.data.totalPrice, 0);
-    // console.log(totalPrice)
     return totalPrice;
+    } else if (criteria == "duration"){
+      const totalDuration = newData
+      .filter(item => {
+        const itemDate = new Date(item.data.orderDate);
+        const startDate = new Date(year, month, 1);
+        return itemDate >= startDate && itemDate <= new Date(year, month, day);
+      })
+      .reduce((total, item) => total + item.data.duration, 0);
+    return totalDuration;
+    } else {
+      const totalCustomer = newData
+      .filter(item => {
+        const itemDate = new Date(item.data.orderDate);
+        const startDate = new Date(year, month, 1);
+        return itemDate >= startDate && itemDate <= new Date(year, month, day);
+      })
+      .reduce((total, item) => total + item.customer, 0);
+    return totalCustomer;
+    }
   };
   
-  const getTotalPriceForPreviousDateRange = (currentYear, currentMonth, currentDay) => {
+  const comparison = (currentYear, currentMonth, currentDay, criteria) => {
     const previousMonth = currentMonth === 1 ? 12 : currentMonth - 1;
     const previousYear = currentMonth === 1 ? currentYear - 1 : currentYear;
     const daysInPreviousMonth = new Date(previousYear, previousMonth, 1).getDate();
     console.log(daysInPreviousMonth)
-  
-    const currentMonthTotal = getTotalPriceForDateRange(currentYear, currentMonth, currentDay);
-    const previousMonthTotal = getTotalPriceForDateRange(previousYear, previousMonth, currentDay);
-  
-    return { currentMonthTotal, previousMonthTotal };
+    
+    if (criteria == "totalPrice"){
+      const currentMonthTotal = totalValue(currentYear, currentMonth, currentDay, "totalPrice");
+      const previousMonthTotal = totalValue(previousYear, previousMonth, currentDay, "totalPrice");
+      return { currentMonthTotal, previousMonthTotal };
+    } else if (criteria == "duration"){
+      const currentMonthDuration = totalValue(currentYear, currentMonth, currentDay, "duration");
+      const previousMonthDuration = totalValue(previousYear, previousMonth, currentDay, "duration");
+      return { currentMonthDuration, previousMonthDuration };
+    } else {
+      const currentMonthCustomer = totalValue(currentYear, currentMonth, currentDay, "totalCustomer");
+      const previousMonthCustomer = totalValue(previousYear, previousMonth, currentDay, "totalCustomer");
+      return { currentMonthCustomer, previousMonthCustomer };
+    }
   };
 
+  const addColumn = data => {
+    return data.map(user => ({ ...user, customer: 1 }));
+  };
+
+  const newData = addColumn(source)
+  console.log(newData)
   const currentDate = new Date();
   const currentYear = currentDate.getFullYear();
   const currentMonth = currentDate.getMonth();
   const currentDay = currentDate.getDate() + 1;
-  const { currentMonthTotal, previousMonthTotal } = getTotalPriceForPreviousDateRange(currentYear, currentMonth, currentDay);
-  
+  const { currentMonthTotal, previousMonthTotal } = comparison(currentYear, currentMonth, currentDay, "totalPrice");
+  const { currentMonthDuration, previousMonthDuration } = comparison(currentYear, currentMonth, currentDay, "duration")
+  const { currentMonthCustomer, previousMonthCustomer } = comparison(currentYear, currentMonth, currentDay, "customer")
 
   const sales = [
     {
@@ -154,16 +189,16 @@ export default function Example({source}) {
     },
     {
       title: "Customers",
-      metric: 456,
-      metricPrev: 387,
+      metric: currentMonthCustomer,
+      metricPrev: previousMonthCustomer,
       delta: "0",
       data: customers,
       deltaType: "moderateIncrease",
     },
     {
-      title: "Churn Rate",
-      metric: 9,
-      metricPrev: 15,
+      title: "Duration",
+      metric: currentMonthDuration,
+      metricPrev: previousMonthDuration,
       delta: "0",
       data: customers,
       deltaType: "moderateDecrease",
