@@ -24,7 +24,6 @@ export default function Example({ source, csData }) {
       item.data.provinsi = provinsi;
       return { item: item.data };
     });
-  console.log("province", province)
 
   const totalValue = (year, month, day, criteria) => {
     if (criteria == "totalPrice") {
@@ -60,7 +59,6 @@ export default function Example({ source, csData }) {
   const comparison = (currentYear, currentMonth, currentDay, criteria) => {
     const previousMonth = currentMonth === 1 ? 12 : currentMonth - 1;
     const previousYear = currentMonth === 1 ? currentYear - 1 : currentYear;
-    const daysInPreviousMonth = new Date(previousYear, previousMonth, 1).getDate();
 
     if (criteria == "totalPrice") {
       const currentMonthTotal = totalValue(currentYear, currentMonth, currentDay, "totalPrice");
@@ -81,14 +79,12 @@ export default function Example({ source, csData }) {
     return data.map(user => ({ ...user, customer: 1 }));
   };
 
-
   const newData = addColumn(source)
   const currentDate = new Date();
   const currentYear = currentDate.getFullYear();
   const currentMonth = currentDate.getMonth();
   const currentDay = currentDate.getDate() + 1;
   const dataFinal = addColumn(province)
-  console.log("data final", dataFinal)
 
   const previousProvince = dataFinal
   .filter(item => {
@@ -96,7 +92,6 @@ export default function Example({ source, csData }) {
     const itemDate = new Date(item.item.orderDate);
     return itemDate >= startDate && itemDate <= new Date(currentYear, currentMonth - 1, currentDay);
   })
-  console.log("previous province", previousProvince)
 
   const currentProvince = dataFinal
     .filter(item => {
@@ -104,7 +99,6 @@ export default function Example({ source, csData }) {
       const itemDate = new Date(item.item.orderDate);
       return itemDate >= startDate && itemDate <= new Date(currentYear, currentMonth, currentDay);
     })
-  console.log("current province", currentProvince)
 
     interface Item {
       provinsi: string;
@@ -131,10 +125,8 @@ export default function Example({ source, csData }) {
       }, []);
     };
   const totalData = groupAndSumData(dataFinal)
-  console.log("total data", totalData)
   const sortedData = [...totalData].sort((a, b) => b.totalPrice - a.totalPrice);
   const provinsiList = sortedData.map(item => item.provinsi);
-  console.log("sorted", provinsiList)
 
   const { currentMonthTotal, previousMonthTotal } = comparison(currentYear, currentMonth, currentDay, "totalPrice");
   const { currentMonthDuration, previousMonthDuration } = comparison(currentYear, currentMonth, currentDay, "duration")
@@ -142,32 +134,26 @@ export default function Example({ source, csData }) {
 
   const provinceComparison = (selectedProvince, selectedValue) => {
     const thisMonth = groupAndSumData(currentProvince)
-    console.log("this month", thisMonth)
     const prevMonth = groupAndSumData(previousProvince)
-    console.log("prev month", prevMonth)
     const currentTarget = thisMonth.find(item => item.provinsi === selectedProvince)
     const prevTarget = prevMonth.find(item => item.provinsi === selectedProvince)
     if (selectedValue == "totalPrice"){
       const currentValue = currentTarget ? currentTarget.totalPrice : 0;
       const prevValue = prevTarget ? prevTarget.totalPrice : 0;
-      const percentage = (((currentValue - prevValue) / prevValue) * 100).toFixed(2);
-      return `${percentage}%`
+      const percentage = ((currentValue - prevValue) / prevValue) * 100;
+      return percentage
     } else if (selectedValue == "totalDuration"){
       const currentValue = currentTarget ? currentTarget.totalDuration : 0;
       const prevValue = prevTarget ? prevTarget.totalDuration : 0;
-      const percentage = (((currentValue - prevValue) / prevValue) * 100).toFixed(2);
-      return `${percentage}%`
+      const percentage = ((currentValue - prevValue) / prevValue) * 100;
+      return percentage
     } else if (selectedValue == "totalCustomer"){
       const currentValue = currentTarget ? currentTarget.totalCustomer : 0;
       const prevValue = prevTarget ? prevTarget.totalCustomer : 0;
-      const percentage = (((currentValue - prevValue) / prevValue) * 100).toFixed(2);
-      return `${percentage}%`
+      const percentage = ((currentValue - prevValue) / prevValue) * 100;
+      return percentage
     }
   }
-  console.log("percentage", provinceComparison(provinsiList[0], "totalDuration"))
-  console.log("percentage", provinceComparison(provinsiList[1], "totalDuration"))
-  console.log("percentage", provinceComparison(provinsiList[2], "totalDuration"))
-  console.log("percentage", provinceComparison(provinsiList[3], "totalDuration"))
 
   const sales = [
     {
@@ -310,6 +296,24 @@ export default function Example({ source, csData }) {
       category.deltaType = "unchanged";
     }
   });
+
+  const updateStatus = (data) => {
+    data.forEach((item) => {
+      item.stat = item.stat.toFixed(2) + "%";
+      
+      if (parseFloat(item.stat) > 0) {
+        item.status = "moderateIncrease";
+      } else if (parseFloat(item.stat) < 0) {
+        item.status = "moderateDecrease";
+      }
+    });
+  };
+  
+  updateStatus(sales);
+  updateStatus(profit);
+  updateStatus(customers);
+  updateStatus(duration);
+
   return (
     <Grid numItemsSm={3} numItemsLg={4} numItemsMd={2} className="gap-6">
       {categories.map((item) => (
