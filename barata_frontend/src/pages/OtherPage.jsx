@@ -15,7 +15,7 @@ import {
 
 export default function OtherPage() {
 
-  const [ bookData ] = useOutletContext()
+  const [ bookData, chargingstationData ] = useOutletContext()
 
   const active_user_data = [
     { key: 'customerId', label: 'Customer ID' },
@@ -26,7 +26,7 @@ export default function OtherPage() {
   return (
     <Grid numItemsMd={2} numItemsLg={1} className="gap-6 mt-6">
     <div className="flex gap-5 mx-2">
-      <Example source = {bookData}/>
+      <Example source = {bookData} csData = {chargingstationData}/>
     </div>
     <div>
       <MyBarChart
