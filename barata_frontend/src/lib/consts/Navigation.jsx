@@ -1,12 +1,10 @@
 import {
 	HiOutlineCube,
-	HiOutlineShoppingCart,
-	HiOutlineUsers,
-	HiOutlineDocumentText,
-	HiOutlineAnnotation,
 	HiOutlineQuestionMarkCircle,
+	HiOutlineDocument,
 	HiOutlineCog,
-    HiOutlineHome
+    HiOutlineHome,
+	HiOutlineChartSquareBar
 } from 'react-icons/hi'
 
 export const DASHBOARD_SIDEBAR_LINKS = [
@@ -20,32 +18,14 @@ export const DASHBOARD_SIDEBAR_LINKS = [
 		key: 'otherpage',
 		label: 'Other Page',
 		path: '/otherpage',
-		icon: <HiOutlineCube />
+		icon: <HiOutlineChartSquareBar />
 	},
-	// {
-	// 	key: 'orders',
-	// 	label: 'Orders',
-	// 	path: '/orders',
-	// 	icon: <HiOutlineShoppingCart />
-	// },
-	// {
-	// 	key: 'customers',
-	// 	label: 'Customers',
-	// 	path: '/customers',
-	// 	icon: <HiOutlineUsers />
-	// },
-	// {
-	// 	key: 'transactions',
-	// 	label: 'Transactions',
-	// 	path: '/transactions',
-	// 	icon: <HiOutlineDocumentText />
-	// },
-	// {
-	// 	key: 'messages',
-	// 	label: 'Messages',
-	// 	path: '/messages',
-	// 	icon: <HiOutlineAnnotation />
-	// }
+	{
+		key: 'downloadpage',
+		label: 'Download Report',
+		path: '/downloadreport',
+		icon: <HiOutlineDocument />
+	},
 ]
 
 export const DASHBOARD_SIDEBAR_CHART_LINKS = [

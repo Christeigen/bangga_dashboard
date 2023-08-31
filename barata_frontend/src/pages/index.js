@@ -1,12 +1,13 @@
 import Dashboard from './Dashboard';
 import Login from './Login';
 import OtherPage from './OtherPage';
-// import '@tremor/react/dist/esm/tremor.css'
+import DownloadPage from './DownloadPage';
 
 export {
     Dashboard,
     Login,
     OtherPage,
+    DownloadPage,
 }
 
 

@@ -129,7 +129,7 @@ export default function Header({ notif }) {
         ) : null}
 
         {showNotification && (
-          <div className="absolute top-24 right-9 bg-stone-100 rounded-lg shadow-xl">
+          <div className="absolute top-24 right-9 bg-stone-100 rounded-lg shadow-xl z-50">
             {notif.map((n) => (
               <div key={n.key} className="border-b p-3 px-5 text-sm">
                 {n}
