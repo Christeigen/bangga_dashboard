@@ -31,7 +31,7 @@ export default function OtherPage() {
     <div>
       <MyBarChart
         source = {bookData} 
-        columns = {active_user_data} 
+        additionalData = {chargingstationData} 
         title = {'Top Sales Charging Station'} 
         shuffle = {true}
         // filter = {5}
