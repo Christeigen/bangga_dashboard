@@ -28,23 +28,23 @@ export const DASHBOARD_SIDEBAR_LINKS = [
 	},
 ]
 
-export const DASHBOARD_SIDEBAR_CHART_LINKS = [
-	{
-		key: 'barchart',
-		label: 'Top Market',
-		path: '/barchart',
-		icon: <HiOutlineCog />
-	},
-	{
-		key: 'linechart',
-		label: 'Revenue History',
-		path: '/linechart',
-		icon: <HiOutlineQuestionMarkCircle />
-	},
-	{
-		key: 'piechart',
-		label: 'Buyer Profile',
-		path: '/piechart',
-		icon: <HiOutlineQuestionMarkCircle />
-	}
-]
+// export const DASHBOARD_SIDEBAR_CHART_LINKS = [
+// 	{
+// 		key: 'barchart',
+// 		label: 'Top Market',
+// 		path: '/barchart',
+// 		icon: <HiOutlineCog />
+// 	},
+// 	{
+// 		key: 'linechart',
+// 		label: 'Revenue History',
+// 		path: '/linechart',
+// 		icon: <HiOutlineQuestionMarkCircle />
+// 	},
+// 	{
+// 		key: 'piechart',
+// 		label: 'Buyer Profile',
+// 		path: '/piechart',
+// 		icon: <HiOutlineQuestionMarkCircle />
+// 	}
+// ]

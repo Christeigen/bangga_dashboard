@@ -11,23 +11,11 @@ import {
   Grid,
 } from "@tremor/react";
 
-export default function Example({ source, csData }) {
-  const combinedData = source.map((item1) => {
-    const matchingItem = csData.find((item2) => item2.data.csId === item1.data.csId);
-    const mergedData = { ...item1.data, ...matchingItem };
-    return { data : mergedData };
-  });
-
-  const province = combinedData
-    .map(item => {
-      const provinsi = item.data.data.location.split(", ").slice(-2)[0];
-      item.data.provinsi = provinsi;
-      return { item: item.data };
-    });
+export default function Example({ source, groupData }) {
 
   const totalValue = (year, month, day, criteria) => {
     if (criteria == "totalPrice") {
-      const totalPrice = newData
+      const totalPrice = source
         .filter(item => {
           const itemDate = new Date(item.data.orderDate);
           const startDate = new Date(year, month, 1);
@@ -36,7 +24,7 @@ export default function Example({ source, csData }) {
         .reduce((total, item) => total + item.data.totalPrice, 0);
       return totalPrice;
     } else if (criteria == "duration") {
-      const totalDuration = newData
+      const totalDuration = source
         .filter(item => {
           const itemDate = new Date(item.data.orderDate);
           const startDate = new Date(year, month, 1);
@@ -45,7 +33,7 @@ export default function Example({ source, csData }) {
         .reduce((total, item) => total + item.data.duration, 0);
       return totalDuration;
     } else {
-      const totalCustomer = newData
+      const totalCustomer = source
         .filter(item => {
           const itemDate = new Date(item.data.orderDate);
           const startDate = new Date(year, month, 1);
@@ -75,28 +63,22 @@ export default function Example({ source, csData }) {
     }
   };
 
-  const addColumn = data => {
-    return data.map(user => ({ ...user, customer: 1 }));
-  };
-
-  const newData = addColumn(source)
   const currentDate = new Date();
   const currentYear = currentDate.getFullYear();
   const currentMonth = currentDate.getMonth();
   const currentDay = currentDate.getDate() + 1;
-  const dataFinal = addColumn(province)
 
-  const previousProvince = dataFinal
+  const previousProvince = source
   .filter(item => {
     const startDate = new Date(currentYear, currentMonth - 1, 1);
-    const itemDate = new Date(item.item.orderDate);
+    const itemDate = new Date(item.data.orderDate);
     return itemDate >= startDate && itemDate <= new Date(currentYear, currentMonth - 1, currentDay);
   })
 
-  const currentProvince = dataFinal
+  const currentProvince = source
     .filter(item => {
       const startDate = new Date(currentYear, currentMonth, 1);
-      const itemDate = new Date(item.item.orderDate);
+      const itemDate = new Date(item.data.orderDate);
       return itemDate >= startDate && itemDate <= new Date(currentYear, currentMonth, currentDay);
     })
 
@@ -108,9 +90,9 @@ export default function Example({ source, csData }) {
     }
     const groupAndSumData = (data: Item[]) => {
       return data.reduce((acc: Item[], item: Item) => {
-        const provinsi = item.item.provinsi;
-        const totalPrice = item.item.totalPrice
-        const totalDuration = item.item.duration
+        const provinsi = item.data.provinsi;
+        const totalPrice = item.data.totalPrice
+        const totalDuration = item.data.duration
         const totalCustomer = item.customer
         const existingprovinsi = acc.findIndex((accItem: Item) => accItem.provinsi === provinsi);
         if (existingprovinsi !== -1) {
@@ -124,9 +106,8 @@ export default function Example({ source, csData }) {
         return acc;
       }, []);
     };
-  const totalData = groupAndSumData(dataFinal)
-  const sortedData = [...totalData].sort((a, b) => b.totalPrice - a.totalPrice);
-  const provinsiList = sortedData.map(item => item.provinsi);
+
+  const provinsiList = groupData.map(item => item.provinsi);
 
   const { currentMonthTotal, previousMonthTotal } = comparison(currentYear, currentMonth, currentDay, "totalPrice");
   const { currentMonthDuration, previousMonthDuration } = comparison(currentYear, currentMonth, currentDay, "duration")
@@ -305,6 +286,10 @@ export default function Example({ source, csData }) {
         item.status = "moderateIncrease";
       } else if (parseFloat(item.stat) < 0) {
         item.status = "moderateDecrease";
+      } else if (parseFloat(item.stat) == 0) {
+        item.status = "unchanged";
+      } else {
+        item.status = "moderateDecrease"
       }
     });
   };

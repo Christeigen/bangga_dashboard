@@ -85,9 +85,9 @@ import { HiOutlineMagnifyingGlass } from 'react-icons/hi2';
 import { GoBell } from 'react-icons/go';
 
 export default function Header({ notif }) {
-  const [formData, setFormData] = useState({
-    search: '',
-  });
+  // const [formData, setFormData] = useState({
+  //   search: '',
+  // });
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -106,9 +106,9 @@ export default function Header({ notif }) {
   return (
     <div className="bg-white h-16 px-4 my-4 mx-6 flex items-center justify-between rounded-lg shadow-sm">
       <div className="flex">
-        <HiOutlineMagnifyingGlass className="m-2 mr-3 text-xl" />
+        {/* <HiOutlineMagnifyingGlass className="m-2 mr-3 text-xl" /> */}
         <form>
-          <input
+          {/* <input
             type="text"
             name="search"
             placeholder="Search ..."
@@ -116,7 +116,7 @@ export default function Header({ notif }) {
             value={formData.search}
             id="search"
             className="h-full w-full pb-1 mr-3 outline-none text-neutral-400 text-base"
-          />
+          /> */}
         </form>
       </div>
 

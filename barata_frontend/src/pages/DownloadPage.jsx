@@ -66,11 +66,13 @@ export default function DownloadPage() {
     }
 
     const allColumns = [...new Set(data.flatMap(item => Object.keys(item.data)))];
+    console.log("allcolumns", allColumns)
 
     const selectedColumns = allColumns.map(key => ({
         key: key,
         label: key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, ' $1').trim(),
     }));
+    console.log('selectedColumn', selectedColumns)
 
     return (
         <>
@@ -147,7 +149,7 @@ export default function DownloadPage() {
             <Table
                 type = {'download_preview'} 
                 source = {data}
-                title={`${formData.database}${formData.database === 'bookData' && value.from ? ` (${value.from.toDateString()} - ${value.to.toDateString()})` : ' ( All Records )'}`}
+                title={`${formData.database}${formData.database === 'bookData' && value.from ? ` (${value.from} - ${value.to})` : ' ( All Records )'}`}
                 columns = {selectedColumns}
                 shuffle = {true}
                 datefilter = {formData.database === 'bookData' ? value : ''}
