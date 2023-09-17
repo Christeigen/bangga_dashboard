@@ -1,6 +1,6 @@
 import Example from "/src/components/chart/kpi";
 import MyBarChart from "/src/components/chart/bar";
-import {useState} from 'react'
+import { useState } from 'react'
 import { useOutletContext } from "react-router-dom";
 import {
   Card,
@@ -101,143 +101,111 @@ export default function OtherPage() {
 
   return (
     <TabGroup className="mt">
-      <TabList>
-        <Tab>Overview</Tab>
-        <Tab>Province</Tab>
-      </TabList>
-      <TabPanels>
-        <TabPanel>
-          <Grid numItemsMd={2} numItemsLg={1} className="gap-6 mt-6">
-            <div className="flex gap-5 mx-2">
-              <Example source={dataFinal} groupData={sortedData} />
+      <Grid numItemsMd={2} numItemsLg={1} className="gap-6 mt-6">
+        <div className="flex gap-5 mx-2">
+          <Example source={dataFinal} groupData={sortedData} />
+        </div>
+        <div>
+          <Card>
+            <div className="block sm:flex sm:justify-between">
+              <div>
+                <Title>Top Performing Charging Station by Category</Title>
+              </div>
+              <div className={`${formData.database !== 'bookData' ? 'hidden' : ''} text-sm`}>
+                <DateRangePicker
+                  className="max-w-md mx-auto bg-white text-black"
+                  value={value}
+                  onValueChange={setValue}
+                  selectPlaceholder="All Data"
+                  color="rose"
+                >
+                  <DateRangePickerItem
+                    className="text-black bg-white"
+                    key="today"
+                    value="today"
+                    from={new Date()}>
+                    Today
+                  </DateRangePickerItem>
+                  <DateRangePickerItem
+                    className="text-black bg-white"
+                    key="last7days"
+                    value="last7days"
+                    from={new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)}
+                    to={new Date()}>
+                    Last 7 days
+                  </DateRangePickerItem>
+                  <DateRangePickerItem
+                    className="text-black bg-white"
+                    key="last30days"
+                    value="last30days"
+                    from={new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)}
+                    to={new Date()}>
+                    Last 30 days
+                  </DateRangePickerItem>
+                  <DateRangePickerItem
+                    className="text-black bg-white"
+                    key="monthtodate"
+                    value="monthtodate"
+                    from={new Date(new Date().getFullYear(), new Date().getMonth(), 1)}
+                    to={new Date()}>
+                    Month to Date
+                  </DateRangePickerItem>
+                  <DateRangePickerItem
+                    className="text-black bg-white"
+                    key="yeartodate"
+                    value="yeartodate"
+                    from={new Date(new Date().getFullYear(), 0, 1)}
+                    to={new Date()}>
+                    Year to Date
+                  </DateRangePickerItem>
+                </DateRangePicker>
+              </div>
             </div>
-            <div>
-              <Card>
-                <div className="block sm:flex sm:justify-between">
-                  <div>
-                    <Title>Top Performing Charging Station by Category</Title>
-                  </div>
-                  <div className={`${formData.database !== 'bookData' ? 'hidden' : ''} text-sm`}>
-                    <DateRangePicker
-                      className="max-w-md mx-auto bg-white text-black"
-                      value={value}
-                      onValueChange={setValue}
-                      selectPlaceholder="All Data"
-                      color="rose"
-                    >
-                      <DateRangePickerItem
-                        className="text-black bg-white"
-                        key="today"
-                        value="today"
-                        from={new Date()}>
-                        Today
-                      </DateRangePickerItem>
-                      <DateRangePickerItem
-                        className="text-black bg-white"
-                        key="last7days"
-                        value="last7days"
-                        from={new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)}
-                        to={new Date()}>
-                        Last 7 days
-                      </DateRangePickerItem>
-                      <DateRangePickerItem
-                        className="text-black bg-white"
-                        key="last30days"
-                        value="last30days"
-                        from={new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)}
-                        to={new Date()}>
-                        Last 30 days
-                      </DateRangePickerItem>
-                      <DateRangePickerItem
-                        className="text-black bg-white"
-                        key="monthtodate"
-                        value="monthtodate"
-                        from={new Date(new Date().getFullYear(), new Date().getMonth(), 1)}
-                        to={new Date()}>
-                        Month to Date
-                      </DateRangePickerItem>
-                      <DateRangePickerItem
-                        className="text-black bg-white"
-                        key="yeartodate"
-                        value="yeartodate"
-                        from={new Date(new Date().getFullYear(), 0, 1)}
-                        to={new Date()}>
-                        Year to Date
-                      </DateRangePickerItem>
-                    </DateRangePicker>
-                  </div>
-                </div>
-                <TabGroup className="mt-0">
-                  <TabList>
-                    <Tab>Total Sales</Tab>
-                    <Tab>Total Duration</Tab>
-                    <Tab>Province</Tab>
-                  </TabList>
-                  <TabPanels>
-                    <TabPanel>
-                      <MyBarChart
-                        source={dataFinal}
-                        additionalData={chargingstationData}
-                        filter={5}
-                        category="totalPrice"
-                        color="cyan"
-                        index="sales"
-                        datefilter = {value}
-                      />
-                    </TabPanel>
-                    <TabPanel>
-                      <MyBarChart
-                        source={dataFinal}
-                        additionalData={chargingstationData}
-                        filter={5}
-                        category="totalDuration"
-                        color="amber"
-                        index="duration"
-                        datefilter={value}
-                      />
-                    </TabPanel>
-                    <TabPanel>
-                      <MyBarChart
-                        source={dataFinal}
-                        additionalData={chargingstationData}
-                        filter={5}
-                        category="totalPrice"
-                        color="lime"
-                        index="province"
-                        datefilter = {value}
-                      />
-                    </TabPanel>
-                  </TabPanels>
-                </TabGroup>
-              </Card>
-            </div>
-          </Grid>
-        </TabPanel>
-        <TabPanel>
-          <Grid numItemsMd={2} numItemsLg={4} className="gap-6 mt-6">
-            <MyPieChart />
-            <MyPieChart />
-            <MyPieChart />
-            <MyPieChart />
-          </Grid>
-          <div className="mt-6">
-            <Card>
-              <Flex>
-                <Title>Table</Title>
-                <Select>
-                  <SelectItem value="1">
-                    Province
-                  </SelectItem>
-                  <SelectItem value="2">
-                    Charging Station
-                  </SelectItem>
-                </Select>
-              </Flex>
-              <div className="h-80" />
-            </Card>
-          </div>
-        </TabPanel>
-      </TabPanels>
+            <TabGroup className="mt-0">
+              <TabList>
+                <Tab>Total Sales</Tab>
+                <Tab>Total Duration</Tab>
+                <Tab>Province</Tab>
+              </TabList>
+              <TabPanels>
+                <TabPanel>
+                  <MyBarChart
+                    source={dataFinal}
+                    additionalData={chargingstationData}
+                    filter={5}
+                    category="totalPrice"
+                    color="cyan"
+                    index="sales"
+                    datefilter={value}
+                  />
+                </TabPanel>
+                <TabPanel>
+                  <MyBarChart
+                    source={dataFinal}
+                    additionalData={chargingstationData}
+                    filter={5}
+                    category="totalDuration"
+                    color="amber"
+                    index="duration"
+                    datefilter={value}
+                  />
+                </TabPanel>
+                <TabPanel>
+                  <MyBarChart
+                    source={dataFinal}
+                    additionalData={chargingstationData}
+                    filter={5}
+                    category="totalPrice"
+                    color="lime"
+                    index="province"
+                    datefilter={value}
+                  />
+                </TabPanel>
+              </TabPanels>
+            </TabGroup>
+          </Card>
+        </div>
+      </Grid>
     </TabGroup>
   )
 }
