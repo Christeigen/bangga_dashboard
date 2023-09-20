@@ -19,7 +19,6 @@ import {
   DateRangePicker,
   DateRangePickerItem
 } from "@tremor/react";
-import MyPieChart from "../components/chart/pieChart";
 
 export default function OtherPage() {
 

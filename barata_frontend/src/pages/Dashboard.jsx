@@ -40,17 +40,12 @@ export default function Dashboard() {
         </div>
 
         <div className="flex gap-5 mx-2">
-          <div className = " bg-white w-1/2 my-5 rounded-lg shadow-sm px-5">
+          <div className = " bg-white w-full my-5 rounded-lg shadow-sm px-5">
             <div className = "mt-5 text-stone-500 text-[17px]">
               Charging Station Location Map
             </div>
             <Map
               source = {chargingstationData}/>
-          </div>
-          <div className = "w-1/2 my-5">
-            <BarChart
-              source = {bookData}
-              title = {'Top Charging Station'} />
           </div>
         </div>
 

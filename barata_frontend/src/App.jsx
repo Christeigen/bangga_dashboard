@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import Layout from './components/shared/Layout'
-import { Dashboard, Login, OtherPage, DownloadPage } from './pages'
+import { Dashboard, Login, OtherPage, DownloadPage, ChargingStation } from './pages'
 import { useContext } from 'react'
 import { AuthContext } from './context/AuthContext'
 
@@ -20,6 +20,7 @@ function App() {
                     <Route index element={<Dashboard />} />
                     <Route path="otherpage" element={<OtherPage />} />
                     <Route path="downloadreport" element={<DownloadPage />} />
+                    <Route path="chargingstation" element={<ChargingStation />} />
                 </Route>
                 <Route path="/login" element={<Login />} />
             </Routes>

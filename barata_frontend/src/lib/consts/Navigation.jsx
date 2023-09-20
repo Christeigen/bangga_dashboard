@@ -4,7 +4,8 @@ import {
 	HiOutlineDocument,
 	HiOutlineCog,
     HiOutlineHome,
-	HiOutlineChartSquareBar
+	HiOutlineChartSquareBar,
+	HiOutlineLightningBolt
 } from 'react-icons/hi'
 
 export const DASHBOARD_SIDEBAR_LINKS = [
@@ -16,7 +17,7 @@ export const DASHBOARD_SIDEBAR_LINKS = [
 	},
 	{
 		key: 'otherpage',
-		label: 'Other Page',
+		label: 'Performance',
 		path: '/otherpage',
 		icon: <HiOutlineChartSquareBar />
 	},
@@ -26,6 +27,12 @@ export const DASHBOARD_SIDEBAR_LINKS = [
 		path: '/downloadreport',
 		icon: <HiOutlineDocument />
 	},
+	{
+		key: 'chargingstation',
+		label: 'Charging Station',
+		path: '/chargingstation',
+		icon: <HiOutlineLightningBolt />
+	}
 ]
 
 // export const DASHBOARD_SIDEBAR_CHART_LINKS = [
