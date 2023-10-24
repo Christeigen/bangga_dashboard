@@ -65,17 +65,65 @@ export default function chargingStationView() {
       item.deltaType = "unchanged";
     }
   });
-  // totalData.forEach(item => {
-  //   if (item.location) {
-  //     const addressParts = item.location.split(',');
-  //     if (addressParts.length > 4) {
-  //       item.location = addressParts.slice(0, 4).join(', ') + '  \n' + addressParts.slice(4).join(', ');
-  //     }
-  //   }
-  // });
-  console.log("totaldata", totalData)
+
+  const provinces = [
+    "Aceh",
+    "Sumatera Utara",
+    "Sumatera Selatan",
+    "Sumatera Barat",
+    "Bengkulu",
+    "Riau",
+    "Kepulauan Riau",
+    "Jambi",
+    "Lampung",
+    "Bangka Belitung",
+    "Kalimantan Barat",
+    "Kalimantan Timur",
+    "Kalimantan Selatan",
+    "Kalimantan Tengah",
+    "Kalimantan Utara",
+    "Banten",
+    "DKI Jakarta",
+    "Jawa Barat",
+    "Jawa Tengah",
+    "DI Yogyakarta",
+    "Jawa Timur",
+    "Bali",
+    "Nusa Tenggara Timur",
+    "Nusa Tenggara Barat",
+    "Gorontalo",
+    "Sulawesi Barat",
+    "Sulawesi Tengah",
+    "Sulawesi Utara",
+    "Sulawesi Tenggara",
+    "Sulawesi Selatan",
+    "Maluku Utara",
+    "Maluku",
+    "Papua Barat",
+    "Papua",
+    "Papua Selatan",
+    "Papua Tengah",
+    "Papua Pegunungan",
+    "Papua Barat Daya"
+  ];
   return (
-    <TableView 
-    source = {totalData}/>
+    <>
+      <div>
+        database
+        <select
+          className="text-sm outline-none text-black px-2 py-2 ml-3"
+          id="database"
+          name="database"
+        >
+          {provinces.map((province, index) => (
+            <option key={index} value={province}>
+              {province}
+            </option>
+          ))}
+        </select>
+      </div>
+      <TableView
+        source={totalData} />
+    </>
   );
 }

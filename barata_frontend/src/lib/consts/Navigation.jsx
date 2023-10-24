@@ -5,15 +5,16 @@ import {
 	HiOutlineCog,
     HiOutlineHome,
 	HiOutlineChartSquareBar,
-	HiOutlineLightningBolt
+	HiOutlineLightningBolt,
+	HiTrendingUp
 } from 'react-icons/hi'
 
 export const DASHBOARD_SIDEBAR_LINKS = [
 	{
 		key: 'dashboard',
 		label: 'Dashboard',
-		path: '/',
-		icon: <HiOutlineHome />
+		path: '/dashboard',
+		icon: <HiTrendingUp />
 	},
 	{
 		key: 'otherpage',
