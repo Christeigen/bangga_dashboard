@@ -2,7 +2,7 @@ import barataLogo from '/src/assets/barata.png'
 import classNames from 'classnames'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { HiOutlineLogout } from 'react-icons/hi'
-import { DASHBOARD_SIDEBAR_LINKS, DASHBOARD_SIDEBAR_CHART_LINKS } from '../../lib/consts/Navigation'
+import { DASHBOARD_SIDEBAR_LINKS } from '../../lib/consts/Navigation'
 
 const linkClass =
 	'flex items-center gap-2 font-light px-4 py-2 hover:bg-stone-50 hover:no-underline rounded-md text-base font-normal'
@@ -39,20 +39,6 @@ export default function Sidebar() {
           {link.label}
         </Link>
 				))}
-
-        <h1 className = "text-xs py-4 mx-4 font-medium text-stone-300">CHARTS</h1>
-
-        {DASHBOARD_SIDEBAR_CHART_LINKS.map((link) => (
-
-        <Link
-          key={link.key} 
-          to={link.path}
-          className={classNames(pathname === link.path ? 'bg-stone-100 text-black font-medium' : 'text-neutral-400', linkClass)}
-        >
-          {/* <span className="text-xl">{link.icon}</span> */}
-          {link.label}
-        </Link>
-        ))}
 
 			</div>
       
