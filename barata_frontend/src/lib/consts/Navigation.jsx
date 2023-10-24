@@ -34,7 +34,7 @@ export const DASHBOARD_SIDEBAR_LINKS = [
 		label: 'Charging Station',
 		path: '/chargingstation',
 		icon: <HiOutlineLightningBolt />
-	}
+	},
 	{
 		key: 'chargingstation',
 		label: 'Charging Station',
