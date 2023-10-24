@@ -12,22 +12,35 @@ import {
   BadgeDelta,
 } from "@tremor/react";
 
-const categories = [
-  {
-    title: "Total Charging Stations",
-    metric: "$ 23,456",
-  },
-  {
-    title: "Total Active Charging Stations",
-    metric: "$ 13,123",
-  },
-  {
-    title: "Total Inactive Charging Stations",
-    metric: "456",
-  },
-];
-
-export default function tableView ({ source }) {
+export default function tableView({ source, selectedProvince }) {
+  console.log("provinsi dipilih", selectedProvince)
+  if (selectedProvince == "All") {
+    var data = source;
+  } else {
+    var data = source.filter(df => df.provinsi === `${selectedProvince}`);
+  }
+  console.log("data", data)
+  const csIds = data.map(item => item.csId).sort((a, b) => parseInt(a) - parseInt(b));
+  const kpi_count = {
+    total: csIds.length,
+    active: data.filter(cs => cs.status === "aktif").length,
+    inactive: data.filter(cs => cs.status === "tidak aktif" || cs.status === "charging").length
+  }
+  console.log("kpi", kpi_count)
+  const categories = [
+    {
+      title: "Total Charging Stations",
+      metric: `${kpi_count.total}`,
+    },
+    {
+      title: "Total Active Charging Stations",
+      metric: `${kpi_count.active}`,
+    },
+    {
+      title: "Total Inactive Charging Stations",
+      metric: `${kpi_count.inactive}`,
+    },
+  ];
   return (
     <>
       <Grid numItemsMd={2} numItemsLg={3} className="gap-6 mt-6">
@@ -55,7 +68,7 @@ export default function tableView ({ source }) {
             </TableHead>
 
             <TableBody>
-              {source.map((item) => (
+              {data.map((item) => (
                 <TableRow key={item.csName}>
                   <TableCell>{item.csName}</TableCell>
                   <TableCell className="text-right">{item.csId}</TableCell>
