@@ -11,8 +11,7 @@ export {
     Register,
     OtherPage,
     DownloadPage,
-    ChargingStation,
-    ChargingStation,
+    ChargingStation
 }
 
 

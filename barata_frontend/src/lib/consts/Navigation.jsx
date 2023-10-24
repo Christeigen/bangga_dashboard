@@ -19,7 +19,6 @@ export const DASHBOARD_SIDEBAR_LINKS = [
 	{
 		key: 'otherpage',
 		label: 'Performance',
-		label: 'Performance',
 		path: '/otherpage',
 		icon: <HiOutlineChartSquareBar />
 	},
@@ -28,12 +27,6 @@ export const DASHBOARD_SIDEBAR_LINKS = [
 		label: 'Download Report',
 		path: '/downloadreport',
 		icon: <HiOutlineDocument />
-	},
-	{
-		key: 'chargingstation',
-		label: 'Charging Station',
-		path: '/chargingstation',
-		icon: <HiOutlineLightningBolt />
 	},
 	{
 		key: 'chargingstation',
