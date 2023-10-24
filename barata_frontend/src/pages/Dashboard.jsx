@@ -30,7 +30,9 @@ export default function Dashboard() {
             type = {'top_loyal_customer'} 
             source = {bookData} 
             columns = {active_user_data} 
-            title = {'Last user'} 
+            title = {'Top Loyal Customers'} 
+            shuffle = {true}
+            filter = {5}
           />
           <LineChart 
             source = {bookData}
