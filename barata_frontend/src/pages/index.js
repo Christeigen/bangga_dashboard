@@ -12,6 +12,7 @@ export {
     OtherPage,
     DownloadPage,
     ChargingStation,
+    ChargingStation,
 }
 
 

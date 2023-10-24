@@ -27,6 +27,7 @@ function App() {
                     <Route path="otherpage" element={<OtherPage />} />
                     <Route path="downloadreport" element={<DownloadPage />} />
                     <Route path="chargingstation" element={<ChargingStation />} />
+                    <Route path="chargingstation" element={<ChargingStation />} />
                 </Route>
                 <Route index element={<div className="App">
                         <Home />
