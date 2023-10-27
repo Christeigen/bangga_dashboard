@@ -319,7 +319,7 @@ nav {
     max-width: 600px;
   }
 }
-@media (max-width: 800px) {
+@media (max-width: 1000px) {
   .nav-logo-container {
     max-width: 140px;
   }
