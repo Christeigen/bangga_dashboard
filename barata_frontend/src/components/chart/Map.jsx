@@ -5,9 +5,14 @@ import "leaflet/dist/leaflet.css";
 import "/src/index.css"
 
 
-const customIcon = new Icon({
-  iconUrl: "https://cdn-icons-png.flaticon.com/512/447/447031.png",
-  iconSize: [35, 35] // size of the icon
+const activeIcon = new Icon({
+  iconUrl: "https://img.icons8.com/ios-filled/50/1A1A1A/marker.png", 
+  iconSize: [35, 35],
+});
+
+const inactiveIcon = new Icon({
+  iconUrl: "https://img.icons8.com/ios-filled/50/FA5252/marker.png",
+  iconSize: [35, 35],
 });
 
 const createClusterCustomIcon = function (cluster) {
@@ -20,18 +25,19 @@ const createClusterCustomIcon = function (cluster) {
 
 
 export default function Map({source}) {
+
+    console.log(source[0].data.status)
       
     const markers = source.map((item) => ({
         geocode: [parseFloat(item.data.lat), parseFloat(item.data.longt)],
         popUp: item.data.name, 
+        status: item.data.status,
       }));
 
     const center = [
         markers.reduce((sum, marker) => sum + marker.geocode[0], 0) / markers.length,
         markers.reduce((sum, marker) => sum + marker.geocode[1], 0) / markers.length,
     ];
-
-    console.log(center)
 
     return (
         <MapContainer className = "text-black" center={center} zoom={10}>
@@ -47,7 +53,12 @@ export default function Map({source}) {
             iconCreateFunction={createClusterCustomIcon}>
 
                 {markers.map((marker, index) => (
-                <Marker key={index} position={marker.geocode} icon={customIcon}>
+                <Marker 
+                key={index} 
+                position={marker.geocode} 
+                icon={marker.status === "aktif" ? activeIcon : inactiveIcon}
+                // icon={customIcon}
+                >
                     <Popup>{marker.popUp}</Popup>
                 </Marker>
                 ))}
