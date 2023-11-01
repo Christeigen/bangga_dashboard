@@ -29,14 +29,7 @@ function App() {
                     <Route path="chargingstation" element={<ChargingStation />} />
                     <Route path="chargingstation" element={<ChargingStation />} />
                 </Route>
-                <Route index element={<div className="App">
-                        <Home />
-                        <About />
-                        <Work />
-                        <Testimonial />
-                        <Contact />
-                        <Footer />
-                    </div>} />
+                <Route index element={<About/>}/>
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
             </Routes>
