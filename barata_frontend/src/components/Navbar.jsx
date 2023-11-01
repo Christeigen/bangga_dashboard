@@ -1,7 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from "react";
-import Logo from "../Assets/Logo.svg";
-import { BsCart2 } from "react-icons/bs";
 import { HiOutlineBars3 } from "react-icons/hi2";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
@@ -11,7 +9,6 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import BanggaLogo from "../Assets/BANGGA-EVCS.png";
 
 const Navbar = () => {
   const [openMenu, setOpenMenu] = useState(false);
@@ -31,9 +28,6 @@ const Navbar = () => {
   ];
   return (
     <nav>
-      <div className="nav-logo-container">
-        <img src={BanggaLogo} alt="" />
-      </div>
       <div className="navbar-links-container">
         <a href="">Home</a>
         <a href="">Tentang kami</a>
