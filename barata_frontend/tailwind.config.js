@@ -12,7 +12,8 @@ export default {
     extend: {
       fontFamily:{
         roboto: ['Roboto'],
-        nunito: ['Nunito']
+        nunito: ['Nunito'],
+        poppins: ['Poppins', 'sans-serif'],
       },
       colors: {
         // light mode

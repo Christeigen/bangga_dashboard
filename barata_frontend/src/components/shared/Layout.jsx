@@ -6,6 +6,13 @@ import axios from 'axios';
 
 export default function Layout() {
 
+    const userJSON = localStorage.getItem('user');
+    const user = userJSON ? JSON.parse(userJSON) : null;
+
+    // Access the UID from the user object
+    const uid = user ? user.uid : null;
+    console.log(uid)
+
     const [loading, setLoading] = useState(true);
     const [bookData, setBookData] = useState([]);
     const [chargingstationData, setChargingstationData] = useState([]);

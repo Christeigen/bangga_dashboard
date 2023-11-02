@@ -26,8 +26,6 @@ const createClusterCustomIcon = function (cluster) {
 
 export default function Map({source}) {
 
-    console.log(source[0].data.status)
-      
     const markers = source.map((item) => ({
         geocode: [parseFloat(item.data.lat), parseFloat(item.data.longt)],
         popUp: item.data.name, 
@@ -57,7 +55,6 @@ export default function Map({source}) {
                 key={index} 
                 position={marker.geocode} 
                 icon={marker.status === "aktif" ? activeIcon : inactiveIcon}
-                // icon={customIcon}
                 >
                     <Popup>{marker.popUp}</Popup>
                 </Marker>
