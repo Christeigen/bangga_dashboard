@@ -42,6 +42,7 @@ const Login = () => {
             .then((userCredential) => {
                 const user = userCredential.user;
                 console.log(user)
+                console.log(user.uid)
                 dispatch({type:"LOGIN", payload:user})
                 navigate('/dashboard')
             })

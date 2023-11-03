@@ -13,6 +13,7 @@ import {
 } from "@tremor/react";
 import cs from '/src/assets/cs.jpg'
 import cheap from '/src/assets/icon.png'
+import {Navbar, Footer} from '/src/components/shared/company_profile/index.js';
 
 const table1 = [
   {
@@ -68,14 +69,15 @@ const table2 = [
   },
 ];
 
-const About = () => {
+const ProductPage = () => {
   return (
     <div class="background px-32 py-32 bg-white">
+      <Navbar />
       <div className="diff flex flex-col gap-y-32">
         <div class="image&desc flex flex-row gap-x-32">
           <img src={cs} className="cs basis-3/12 max-w-screen-sm" />
           <div className="desc basis-8/12 flex flex-col gap-y-12">
-            <h1 className="text-6xl italic font-bold text-sky-900">BANGGA EVCS</h1>
+            <h1 className="text-6xl font-bold text-sky-900">BANGGA EVCS</h1>
             <h1 className="text-4xl font-poppins">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
               et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
@@ -133,4 +135,4 @@ const About = () => {
   );
 };
 
-export default About;
+export default ProductPage;
