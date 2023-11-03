@@ -77,9 +77,9 @@ const ProductPage = () => {
       <div className="px-16">
         <Navbar />
       </div>
-      <div class="space-y-32">
+      <div className="space-y-32">
         <div className="diff flex flex-col px-16 gap-y-32">
-          <div class="image&desc flex flex-row gap-x-32">
+          <div className="image&desc flex flex-row gap-x-32">
             <img src={cs} className="cs basis-3/12 max-w-screen-sm" />
             <div className="desc basis-8/12 flex flex-col gap-y-12">
               <h1 className="text-4xl font-bold text-sky-900">BANGGA EVCS</h1>
