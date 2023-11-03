@@ -108,8 +108,8 @@ const ProductPage = () => {
               <List className="mt-2">
                 {table1.map((item) => (
                   <ListItem key={item.name}>
-                    <h1 className="text-4xl font-poppins">{item.name}</h1>
-                    <h1 className="text-4xl font-poppins">
+                    <h1 className="text-2xl font-poppins">{item.name}</h1>
+                    <h1 className="text-2xl font-poppins">
                       <Bold>{item.spesifications}</Bold>
                     </h1>
                   </ListItem>
@@ -120,8 +120,8 @@ const ProductPage = () => {
               <List className="mt-2">
                 {table2.map((item) => (
                   <ListItem key={item.name}>
-                    <h1 className="text-4xl font-poppins">{item.name}</h1>
-                    <h1 className="text-4xl font-poppins">
+                    <h1 className="text-2xl font-poppins">{item.name}</h1>
+                    <h1 className="text-2xl font-poppins">
                       <Bold>{item.spesifications}</Bold>
                     </h1>
                   </ListItem>
@@ -130,6 +130,7 @@ const ProductPage = () => {
             </div>
           </Grid>
         </div>
+        <Footer />
       </div>
     </div>
   );
