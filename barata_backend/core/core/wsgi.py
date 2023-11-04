@@ -21,7 +21,7 @@ if settings.DEBUG:
 try:
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings')
 except:
-    os.environ['DJANGO_SETTINGS_MODULE']
+    os.environ['DJANGO_SETTINGS_MODULE'] = 'core.settings'
 
 application = get_wsgi_application()
 
