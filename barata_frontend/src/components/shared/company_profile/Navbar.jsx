@@ -4,7 +4,7 @@ import bangga_logo from '/src/assets/bangga_logo.png';
 import menu from '/src/assets/menu.svg';
 import { navLinks } from "/src/constants/index"; 
 
-export default function Navbar() {
+export default function Navbar({color}) {
 
     const [active, setActive] = useState("Home");
     const [toggle, setToggle] = useState(false);
@@ -17,9 +17,9 @@ export default function Navbar() {
               {navLinks.map((nav, index) => (
                 <li
                   key={nav.id}
-                  className={`font-poppins font-normal cursor-pointer text-[16px] ${
-                    active === nav.title ? "text-black" : "text-white"
-                  } ${index === navLinks.length - 1 ? "mr-0" : "mr-10"}`}
+                  className={`font-poppins font-normal cursor-pointer text-[16px] 
+                    ${active === nav.title ? "text-sky-900 font-bold" : color == "white" ? "text-white" : "text-black"} 
+                    ${index === navLinks.length - 1 ? "mr-0" : "mr-10"}`} 
                   onClick={() => setActive(nav.title)}
                 >
                   <a href={`${nav.id}`}>{nav.title}</a>
@@ -40,19 +40,20 @@ export default function Navbar() {
                 !toggle ? "hidden" : "flex"
               } p-6 bg-black-gradient absolute top-20 right-0 mx-4 my-2 min-w-[140px] rounded-xl sidebar`}
             >
-              <ul className="list-none flex justify-end items-start flex-1 flex-col">
+              {/* <ul className="list-none flex justify-end items-start flex-1 flex-col">
                 {navLinks.map((nav, index) => (
                   <li
                     key={nav.id}
                     className={`font-poppins font-medium cursor-pointer text-[16px] ${
-                      active === nav.title ? "text-white" : "text-dimWhite"
+                      // active === nav.title ? "text-white" : "text-dimwhite"
+                      color == "white" ? "text-white" : "text-black"
                     } ${index === navLinks.length - 1 ? "mb-0" : "mb-4"}`}
                     onClick={() => setActive(nav.title)}
                   >
                     <a href={`#${nav.id}`}>{nav.title}</a>
                   </li>
                 ))}
-              </ul>
+              </ul> */}
             </div>
           </div>
         </nav>

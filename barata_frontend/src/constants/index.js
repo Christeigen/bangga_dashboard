@@ -5,7 +5,7 @@ import keunggulan_3 from '/src/assets/keunggulan_3.png';
 
 export const navLinks = [
   {
-    id: "",
+    id: "home",
     title: "Home",
   },
   {

@@ -9,7 +9,7 @@ export default function TentangKamiPage() {
     <div className = "bg-black w-full overflow-hidden">
         <div className = {`bg-cover bg-center h-screen ${styles.paddingX}`}
              style={{ backgroundImage: `url('./src/assets/jumbotron_2.jpeg')` }}>
-            <Navbar />
+            <Navbar color="black"/>
             <div className = "mt-[250px] bg-black bg-opacity-70 max-w-[800px]">
                 <h1 className = "font-poppins text-white text-5xl py-6 text-left font-bold px-6 ">
                     Bangga Menjaga Lingkungan dengan Reusable Energy
