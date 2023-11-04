@@ -31,7 +31,7 @@ SECRET_KEY = os.environ["django"]
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['.vercel.app','*']
+ALLOWED_HOSTS = ['.vercel.app','*','http://62.72.30.54/']
 
 
 # Application definition
@@ -64,6 +64,7 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173", 
+    "http://62.72.30.54/"
 ]
 
 
