@@ -18,8 +18,10 @@ urlpatterns = []
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
-
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings')
+try:
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings')
+except:
+    os.environ['DJANGO_SETTINGS_MODULE']
 
 application = get_wsgi_application()
 
