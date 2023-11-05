@@ -17,10 +17,17 @@ export default function Navbar({color}) {
               {navLinks.map((nav, index) => (
                 <li
                   key={nav.id}
-                  className={`font-poppins font-normal cursor-pointer text-[16px] 
-                    ${active === nav.title ? "text-sky-900 font-bold" : color == "white" ? "text-white" : "text-black"} 
+                  className={`font-poppins cursor-pointer text-[16px] 
+                    ${active === nav.title ? "text-sky-900 font-black" : color == "white" ? "text-white" : "text-black"} 
                     ${index === navLinks.length - 1 ? "mr-0" : "mr-10"}`} 
-                  onClick={() => setActive(nav.title)}
+                    onClick={() => {
+                      setActive(nav.title);
+                      const updatedLinks = navLinks.map(link => ({
+                        ...link,
+                        active: link.title === nav.title
+                      }));
+                      setNavLinks(updatedLinks);
+                    }}
                 >
                   <a href={`${nav.id}`}>{nav.title}</a>
                 </li>
@@ -40,20 +47,7 @@ export default function Navbar({color}) {
                 !toggle ? "hidden" : "flex"
               } p-6 bg-black-gradient absolute top-20 right-0 mx-4 my-2 min-w-[140px] rounded-xl sidebar`}
             >
-              {/* <ul className="list-none flex justify-end items-start flex-1 flex-col">
-                {navLinks.map((nav, index) => (
-                  <li
-                    key={nav.id}
-                    className={`font-poppins font-medium cursor-pointer text-[16px] ${
-                      // active === nav.title ? "text-white" : "text-dimwhite"
-                      color == "white" ? "text-white" : "text-black"
-                    } ${index === navLinks.length - 1 ? "mb-0" : "mb-4"}`}
-                    onClick={() => setActive(nav.title)}
-                  >
-                    <a href={`#${nav.id}`}>{nav.title}</a>
-                  </li>
-                ))}
-              </ul> */}
+
             </div>
           </div>
         </nav>
