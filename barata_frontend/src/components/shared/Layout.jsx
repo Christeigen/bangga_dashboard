@@ -24,14 +24,17 @@ export default function Layout() {
         const fetchData = async () => {
             try {
                 const [bookResponse, chargingstationResponse, customerResponse, mitraResponse] = await Promise.all([
-                    // axios.get('http://127.0.0.1:8000/bookdata/'),
-                    // axios.get('http://127.0.0.1:8000/chargingstationdata/'),
-                    // axios.get('http://127.0.0.1:8000/customerdata/'),
-                    // axios.get('http://127.0.0.1:8000/mitradata/')
-                    axios.get('https://62.72.30.54:8000/bookdata/'),
-                    axios.get('https://62.72.30.54:8000/chargingstationdata/'),
-                    axios.get('https://62.72.30.54:8000/customerdata/'),
-                    axios.get('https://62.72.30.54:8000/mitradata/')
+
+                    axios.get('http://62.72.30.54:8000/bookdata/'),
+                    axios.get('http://62.72.30.54:8000/chargingstationdata/'),
+                    axios.get('http://62.72.30.54:8000/customerdata/'),
+                    axios.get('http://62.72.30.54:8000/mitradata/')
+
+                    // axios.get('https://62.72.30.54:8000/bookdata/'),
+                    // axios.get('https://62.72.30.54:8000/chargingstationdata/'),
+                    // axios.get('https://62.72.30.54:8000/customerdata/'),
+                    // axios.get('https://62.72.30.54:8000/mitradata/')
+
                     // axios.get('https://barata-backend.vercel.app/bookdata/'),
                     // axios.get('https://barata-backend.vercel.app/chargingstationdata/'),
                     // axios.get('https://barata-backend.vercel.app/customerdata/'),
