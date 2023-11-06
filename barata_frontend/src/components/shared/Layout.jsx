@@ -25,10 +25,10 @@ export default function Layout() {
             try {
                 const [bookResponse, chargingstationResponse, customerResponse, mitraResponse] = await Promise.all([
 
-                    axios.get('http://62.72.30.54:8000/bookdata/'),
-                    axios.get('http://62.72.30.54:8000/chargingstationdata/'),
-                    axios.get('http://62.72.30.54:8000/customerdata/'),
-                    axios.get('http://62.72.30.54:8000/mitradata/')
+                    axios.get('https://bangga-evcs.id/api/bookdata/'),
+                    axios.get('https://bangga-evcs.id/api/chargingstationdata/'),
+                    axios.get('https://bangga-evcs.id/api/customerdata/'),
+                    axios.get('https://bangga-evcs.id/api/mitradata/')
 
                     // axios.get('https://62.72.30.54:8000/bookdata/'),
                     // axios.get('https://62.72.30.54:8000/chargingstationdata/'),

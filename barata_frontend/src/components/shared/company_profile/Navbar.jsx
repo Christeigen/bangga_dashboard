@@ -20,14 +20,7 @@ export default function Navbar({color}) {
                   className={`font-poppins cursor-pointer text-[16px] 
                     ${active === nav.title ? "text-sky-900 font-black" : color == "white" ? "text-white" : "text-black"} 
                     ${index === navLinks.length - 1 ? "mr-0" : "mr-10"}`} 
-                    onClick={() => {
-                      setActive(nav.title);
-                      const updatedLinks = navLinks.map(link => ({
-                        ...link,
-                        active: link.title === nav.title
-                      }));
-                      setNavLinks(updatedLinks);
-                    }}
+                  onClick={() => setActive(nav.title)}
                 >
                   <a href={`${nav.id}`}>{nav.title}</a>
                 </li>
