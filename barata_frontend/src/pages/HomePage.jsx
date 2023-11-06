@@ -2,13 +2,14 @@ import styles from '/src/style.js';
 import {Navbar, Footer, TentangKami, ImgText, TextImg} from '/src/components/shared/company_profile/index.js';
 import app from '/src/assets/app.png';
 import cs from '/src/assets/cs.png';
+import jumbotron from '/src/assets/jumbotron.png';
 
 export default function HomePage() {
   return (
     
     <div className = "bg-black w-full overflow-hidden">
         <div className = {`bg-cover bg-center h-screen ${styles.paddingX}`}
-             style={{ backgroundImage: `url('./src/assets/jumbotron.png')` }}>
+             style={{ backgroundImage: `url(${jumbotron})` }}>
             <Navbar color= "white"/>
             <h1 className = "font-poppins text-white text-8xl py-6 text-right font-bold">
                 Isi Daya <br/>Ingat Bangga
