@@ -302,7 +302,7 @@ export default function Example({ source, groupData }) {
   return (
     <Grid numItemsSm={3} numItemsLg={4} numItemsMd={2} className="gap-6">
       {categories.map((item) => (
-        <Card key={item.title} style={{ width: "335px", height: "310px" }}>
+        <Card key={item.title} style={{ width: "230px", height: "310px" }}>
           <Flex alignItems="start">
             <Text>{item.title}</Text>
             <BadgeDelta deltaType={item.deltaType}>{item.delta}</BadgeDelta>

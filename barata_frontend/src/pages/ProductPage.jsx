@@ -90,18 +90,18 @@ const ProductPage = () => {
                 dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
                 officia deserunt mollit anim id est laborum.
               </h1>
-              <div className="strenght flex flex-row justify-center gap-x-20">
+              <div className="strenght flex flex-row justify-center gap-x-32">
                 <div className="flex flex-col gap-y-5">
                   <img src={cheap} className="w-24 h-24" />
-                  <h1 className="text-center text-black font-bold text-2xl">Harga Terjangkau</h1>
+                  <h1 className="text-center text-black font-bold text-2xl">Harga <br/> Terjangkau</h1>
                 </div>
                 <div className="flex flex-col gap-y-5">
                   <img src={efficient} className="w-24 h-24" />
-                  <h1 className="text-center text-black font-bold text-2xl">Cepat dan Efisien</h1>
+                  <h1 className="text-center text-black font-bold text-2xl">Cepat dan <br/> Efisien</h1>
                 </div>
                 <div className="flex flex-col gap-y-5">
                   <img src={easy} className="w-24 h-24" />
-                  <h1 className="text-center text-black font-bold text-2xl">Mudah diakses</h1>
+                  <h1 className="text-center text-black font-bold text-2xl">Mudah <br/> diakses</h1>
                 </div>
               </div>
             </div>
