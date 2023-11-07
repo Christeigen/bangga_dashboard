@@ -25,7 +25,7 @@ firebaseConfig = {
 firebase=pyrebase.initialize_app(firebaseConfig)
 auth = firebase.auth()
 database=firebase.database()
-callback_key = "6uXoVZ5aTnmavkGmjwIPqq7445MFUpoYD8HEJwozQ3k84KXG"
+callback_key = "DugLgqfRxdgbIVfTnk71GhnIW5Ak4B5NsWFWZjAwRT52AioE"
 
 
 class PaymentCreateView(APIView):

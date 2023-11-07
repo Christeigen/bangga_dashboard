@@ -23,7 +23,7 @@ firebase=pyrebase.initialize_app(firebaseConfig)
 authe = firebase.auth()
 db =firebase.database()
 
-secret_key = 'xnd_development_FmKSOuwrox670saxNsPCCZ4LGiwHtMz6R5zKBUCilRPWpBtrylWyh0IaMT4yM0p:'
+secret_key = 'xnd_development_p4HABJb6wQWfoiBxPv780qwdLFvRk66xG1BHH9IK65iSUpOderLfHtLb7hyh3Z:'
 encoded_key = base64.b64encode(secret_key.encode()).decode()
 
 headers = {
