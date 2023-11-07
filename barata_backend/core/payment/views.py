@@ -9,6 +9,7 @@ from .serializers import  PaymentMethodCreateSerializer, CustomerCreateSerialize
 from payment import customer
 import pyrebase
 import json
+import datetime
 from payment import send_notification
 
 firebaseConfig = {
@@ -67,7 +68,14 @@ class PaymentMethodCreateView(APIView):
             
                 return Response(json.loads(payment_method.text), status=payment_method.status_code)
             else :
-                print("tidak sama!")
+                log_error_file = "log_error.txt"
+
+# Get the current timestamp
+                current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+                with open(log_error_file, "a") as new_file:
+                    new_file.write(f"[{current_time}] FAILED - CUSTOMER NOT FOUND! \n")
+
                 not_same = {
                     "error" : "invalid data!",
                 }
@@ -77,12 +85,20 @@ class PaymentMethodCreateView(APIView):
     
 class PaymentActiveView(APIView):
     def post(self, request, *args, **kwargs):
-        print(json.loads(request.body))
-
         if request.headers["X-Callback-Token"] != callback_key:
             not_same = {
                     "error" : "Strict access from another link!",
                 }
+            log_error_file = "log_error.txt"
+   
+
+        # Get the current timestamp
+            current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+            with open(log_error_file, "a") as new_file:
+                new_file.write(f"[{current_time}] {0} ACCES DENIED, TOKEN NOT VALID! \n")
+
+
             return Response(not_same, status=status.HTTP_400_BAD_REQUEST)
         
         customer.add_pm_to_firebase(request.body)
@@ -117,7 +133,13 @@ class PaymentRequestCreateView(APIView):
                 send_notification.send_notif(token, "Selesaikan pembayaran mu!", "Segera bayar dan gunakan charging station!")
                 return Response(json.loads(customer_payment.text), status=customer_payment.status_code)
             else :
-                print("tidak sama!")
+                log_error_file = "log_error.txt"
+
+                current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+                with open(log_error_file, "a") as new_file:
+                    new_file.write(f"[{current_time}] FAILED - CUSTOMER NOT FOUND! \n")
+
                 not_same = {
                     "error" : "invalid data!",
                 }
@@ -130,7 +152,15 @@ class PaymentRequestCreateView(APIView):
 class PaymentPaidView(APIView):
     def post(self, request, *args, **kwargs):
         if request.headers["X-Callback-Token"] != callback_key:
-            print("tidak sama!")
+
+            log_error_file = "log_error.txt"
+
+# Get the current timestamp
+            current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+            with open(log_error_file, "a") as new_file:
+                new_file.write(f"[{current_time}] ACCES DENIED, TOKEN NOT VALID! \n")
+
             not_same = {
                     "error" : "Strict access from another link!",
                 }
@@ -157,6 +187,7 @@ class PaymentPaidView(APIView):
 class PaymentMethodGet(APIView):
     def get(self, request, id,*args, **kwargs):
         customer_pm = customer.customer_balance_wallet(id)
+        
         return Response(json.loads(customer_pm.text), status=customer_pm.status_code)
     
 class NotificationSend(APIView):
@@ -173,18 +204,37 @@ class NotificationSend(APIView):
             res = {
                 "success":"notification send!"
             }
-            print("berhasil mengirim pesan!")
+            log_error_file = "log_error.txt"
+
+# Get the current timestamp
+            current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+            with open(log_error_file, "a") as new_file:
+                new_file.write(f"[{current_time}] SUCCESS - SEND NOTIFICATION \n")
 
             return Response(res, status=status.HTTP_200_OK)
         else :
-            print("salah!")
+            log_error_file = "log_error.txt"
+
+# Get the current timestamp
+            current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+            with open(log_error_file, "a") as new_file:
+                new_file.write(f"[{current_time}] INPUT NOT VALID!\n")
         
         return HttpResponse()
     
 class PaymentRequestCallbackView(APIView):
     def post(self, request, *args, **kwargs):
         if request.headers["X-Callback-Token"] != callback_key:
-            print("tidak sama!")
+            log_error_file = "log_error.txt"
+
+# Get the current timestamp
+            current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+            with open(log_error_file, "a") as new_file:
+                new_file.write(f"[{current_time}] ACCES DENIED, TOKEN NOT VALID! \n")
+
             not_same = {
                     "error" : "Strict access from another link!",
                 }
