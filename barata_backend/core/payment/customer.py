@@ -234,8 +234,6 @@ def update_status_payment(cust_id, id):
           token = []
           token1 = []
           token.append(fcm_token_db)
-          print(fcm_token_db)
-          print(fcm_token_db_mitra)
           token1.append(fcm_token_db_mitra)
           save_notif_firebase(cust_id, "Pembayaran sukses!", "Segera scan qr untuk melakukan pengisian!", "success")
           send_notification.send_notif(token, "Pembayaran sukses!", "Segera scan qr untuk melakukan pengisian!")

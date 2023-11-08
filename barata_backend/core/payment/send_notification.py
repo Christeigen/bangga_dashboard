@@ -2,7 +2,9 @@
 # These registration tokens come from the client FCM SDKs.
 import firebase_admin
 from firebase_admin import credentials, messaging
-cred = credentials.Certificate("C:/Users/Geraldus Wilsen/Documents/ProjectBarata/barata_dashboard/barata_backend/core/chargingstation-17519-firebase-adminsdk-oxgx9-71e7688b45.json")
+import datetime
+
+cred = credentials.Certificate("D:/backend_django/barata_backend/core/chargingstation-17519-firebase-adminsdk-oxgx9-71e7688b45.json")
 firebase_admin.initialize_app(cred)
 
 def send_notif(registration_tokens, title, body):
@@ -13,4 +15,11 @@ def send_notif(registration_tokens, title, body):
         ),tokens=registration_tokens
     )
     response = messaging.send_multicast(message)
-    print('{0} messages were sent successfully'.format(response.success_count))
+    log_error_file = "log_error.txt"
+   
+
+# Get the current timestamp
+    current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    with open(log_error_file, "a") as new_file:
+        new_file.write(f"[{current_time}] SUCCESS - SEND NOTIFICATION \n")
