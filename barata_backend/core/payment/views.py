@@ -130,7 +130,7 @@ class PaymentRequestCreateView(APIView):
                     }
                     return Response(data_error, status=status.HTTP_400_BAD_REQUEST)
                 customer_payment = customer.add_payment_request(amount, pmdb["paymentMethodId"], customer_id, type_wallet)
-                print(customer_payment.text)
+              
                 customer.add_firebase_payment_request(customer_payment.text, user_id)
 
                 response_json_from_xendit = json.loads(customer_payment.text)
