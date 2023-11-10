@@ -23,7 +23,7 @@ firebase=pyrebase.initialize_app(firebaseConfig)
 authe = firebase.auth()
 db =firebase.database()
 
-secret_key = 'xnd_development_FmKSOuwrox670saxNsPCCZ4LGiwHtMz6R5zKBUCilRPWpBtrylWyh0IaMT4yM0p:'
+secret_key = 'xnd_development_p4HABJb6wQWfoiBxPv780qwdLFvRk66xG1BHH9IK65iSUpOderLfHtLb7hyh3Z:'
 encoded_key = base64.b64encode(secret_key.encode()).decode()
 
 headers = {
@@ -191,6 +191,42 @@ def customer_balance_wallet(id):
     response = requests.get(f'https://api.xendit.co/v2/payment_methods/{id}', headers=headers)
     return response
 
+def add_new_book(book_id, cs_id, customer_id, duration, status, price, payment_request_id):
+
+    x = requests.get('https://timeapi.io/api/Time/current/zone?timeZone=UTC')
+    if (x.status_code == 200):
+        time_now = json.loads(x.text)
+        datetimenowinhere = time_now["dateTime"]
+        datetimenowinhere_date = parser.parse(datetimenowinhere)
+        timestampcreatedat = datetimenowinhere_date + timedelta(minutes=5) 
+
+        order_date = (datetimenowinhere_date).replace(tzinfo=timezone.utc).timestamp() * 1e3
+
+        expired_at = (timestampcreatedat).replace(tzinfo=timezone.utc).timestamp() * 1e3
+
+        data_book = {
+        "csId" : cs_id,
+        "customerId" : customer_id,
+        "duration" : duration, 
+        "status" : status, 
+        "totalPrice"  :price,
+        "paymentRequestId":payment_request_id,
+        "socketId" : "1",
+        "orderDate" : order_date,
+        "expiredAt" : expired_at
+        }
+
+        db.child("book").child(book_id).set(data_book)
+        return True
+    else :
+        return False
+
+def update_book_active(user_id, book_id):
+    db.child("users").child("customers").child(user_id).update({"bookActive":book_id})
+
+
+    
+
 
 
 def update_status_payment(cust_id, id):
@@ -217,7 +253,6 @@ def update_status_payment(cust_id, id):
           datetimenowinhere = time_now["dateTime"]
           duration = db.child("book").child(user_book).child("duration").get()
           totalPrice = db.child("book").child(user_book).child("totalPrice").get()
-          et_tz = tz.gettz("UTC")
           datetimenowinhere_date = parser.parse(datetimenowinhere)
           timestampcreatedat = datetimenowinhere_date + timedelta(minutes=30) 
 
