@@ -14,7 +14,7 @@ def send_notif(registration_tokens, title, body):
             body=body
         ),tokens=registration_tokens
     )
-    response = messaging.send_multicast(message)
+    messaging.send_multicast(message)
     log_error_file = "log_error.txt"
    
 

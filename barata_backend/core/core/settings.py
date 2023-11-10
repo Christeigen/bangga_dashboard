@@ -31,7 +31,7 @@ SECRET_KEY = os.environ["django"]
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['.vercel.app','127.0.0.1','http://62.72.30.54/','62.72.30.54','bangga-evcs.id']
+ALLOWED_HOSTS = ['.vercel.app','*','http://62.72.30.54/','62.72.30.54','bangga-evcs.id']
 
 
 # Application definition
