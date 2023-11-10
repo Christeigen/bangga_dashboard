@@ -225,9 +225,6 @@ def update_book_active(user_id, book_id):
     db.child("users").child("customers").child(user_id).update({"bookActive":book_id})
 
 
-    
-
-
 
 def update_status_payment(cust_id, id):
     users = db.child("users").child("customers").get()
@@ -255,25 +252,27 @@ def update_status_payment(cust_id, id):
           totalPrice = db.child("book").child(user_book).child("totalPrice").get()
           datetimenowinhere_date = parser.parse(datetimenowinhere)
           timestampcreatedat = datetimenowinhere_date + timedelta(minutes=30) 
+          if user_book != "0":
+                db.child("socket").child(csId).child("1").update({"bookActive":user_book, "createdAt":(datetimenowinhere_date).replace(tzinfo=timezone.utc).timestamp() * 1e3 , "expiredAt": (timestampcreatedat).replace(tzinfo=timezone.utc).timestamp() * 1e3 ,"status": 100})
 
-          db.child("socket").child(csId).child("1").update({"bookActive":user_book, "createdAt":(datetimenowinhere_date).replace(tzinfo=timezone.utc).timestamp() * 1e3 , "expiredAt": (timestampcreatedat).replace(tzinfo=timezone.utc).timestamp() * 1e3 ,"status": 100})
+                db.child("payment_request").child(cust_id).child(id).update({"status" : 100, "successDate": (datetimenowinhere_date).replace(tzinfo=timezone.utc).timestamp() * 1e3 })
+                
+                db.child("book").child(user_book).update({"socketId":"1", "expiredAt": (timestampcreatedat).replace(tzinfo=timezone.utc).timestamp() * 1e3 ,"status": 100})
 
-          db.child("payment_request").child(cust_id).child(id).update({"status" : 100, "successDate": (datetimenowinhere_date).replace(tzinfo=timezone.utc).timestamp() * 1e3 })
-          
-          db.child("book").child(user_book).update({"socketId":"1", "expiredAt": (timestampcreatedat).replace(tzinfo=timezone.utc).timestamp() * 1e3 ,"status": 100})
+                db.child("withdraw").child(mitra_id).child("totalPrice").child(user_book).set(totalPrice.val())
 
-          db.child("withdraw").child(mitra_id).child("totalPrice").child(user_book).set(totalPrice.val())
-
-          fcm_token_db = db.child("users").child("customers").child(id_user).child("FCMToken").get().val()
-          fcm_token_db_mitra = db.child("users").child("mitra").child(mitra_id).child("FCMToken").get().val()
-          token = []
-          token1 = []
-          token.append(fcm_token_db)
-          token1.append(fcm_token_db_mitra)
-          save_notif_firebase(cust_id, "Pembayaran sukses!", "Segera scan qr untuk melakukan pengisian!", "success")
-          send_notification.send_notif(token, "Pembayaran sukses!", "Segera scan qr untuk melakukan pengisian!")
-          send_notification.send_notif(token1, "Charging Station dipesan!!", "Cek aplikasi untuk memantau pengisian!")
-          return True
+                fcm_token_db = db.child("users").child("customers").child(id_user).child("FCMToken").get().val()
+                fcm_token_db_mitra = db.child("users").child("mitra").child(mitra_id).child("FCMToken").get().val()
+                token = []
+                token1 = []
+                token.append(fcm_token_db)
+                token1.append(fcm_token_db_mitra)
+                save_notif_firebase(cust_id, "Pembayaran sukses!", "Segera scan qr untuk melakukan pengisian!", "success")
+                send_notification.send_notif(token, "Pembayaran sukses!", "Segera scan qr untuk melakukan pengisian!")
+                send_notification.send_notif(token1, "Charging Station dipesan!!", "Cek aplikasi untuk memantau pengisian!")
+                return True
+          else :
+              return False
       else :
           return False
     else :
