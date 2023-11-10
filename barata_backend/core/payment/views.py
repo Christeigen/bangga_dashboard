@@ -147,11 +147,27 @@ class PaymentRequestCreateView(APIView):
                         send_notification.send_notif(token, "Selesaikan pembayaran mu!", "Segera bayar dan gunakan charging station!")
                         return Response(json.loads(customer_payment.text), status=customer_payment.status_code)
                     else :
+                        log_error_file = "log_error.txt"
+
+# Get the current timestamp
+                        current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+                        with open(log_error_file, "a") as new_file:
+                            new_file.write(f"[{current_time}] FAILED - FAIL TO ADD NEW BOOK \n")
+
+
                         not_same = {
                             "error" : "Failed to add new book!",
                         }
                         return Response(not_same, status=status.HTTP_400_BAD_REQUEST)
                 else :
+                    log_error_file = "log_error.txt"
+
+# Get the current timestamp
+                    current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+                    with open(log_error_file, "a") as new_file:
+                        new_file.write(f"[{current_time}] FAILED - FAIL TO ADD NEW PAYMENT \n")
                     not_same = {
                         "error" : "Failed to add new payment!",
                     }
