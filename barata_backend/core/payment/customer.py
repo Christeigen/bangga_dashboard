@@ -272,10 +272,30 @@ def update_status_payment(cust_id, id):
                 send_notification.send_notif(token1, "Charging Station dipesan!!", "Cek aplikasi untuk memantau pengisian!")
                 return True
           else :
-              return False
+                log_error_file = "log_error.txt"
+
+# Get the current timestamp
+                current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+                with open(log_error_file, "a") as new_file:
+                    new_file.write(f"[{current_time}] FAILED - USER BOOK HAVE 0 VALUE \n")
+                return False
       else :
+          log_error_file = "log_error.txt"
+
+# Get the current timestamp
+          current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+          with open(log_error_file, "a") as new_file:
+            new_file.write(f"[{current_time}] FAILED - TIMESTAMP ERROR \n")
+    
           return False
     else :
+        current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+        with open(log_error_file, "a") as new_file:
+            new_file.write(f"[{current_time}] FAILED - SOCKET HAVE BOOK ACTIVE! \n")
+
         return False
         
       
@@ -300,9 +320,10 @@ def refund_ewallet(cust_id, id):
     response = requests.post(f'https://api.xendit.co/ewallets/charges/{id}/void', headers=headers)
     if(response.status_code == 200):
         db.child("payment_request").child(cust_id).child(id).update({"status" : 500})
-        db.child("book").child(user_book).update({"socketId":"1","status": 500})
-    
-        db.child("withdraw").child(mitra_id).child("totalPrice").child(user_book).set(0)
+
+        if user_book != 0:
+            db.child("book").child(user_book).update({"socketId":"1","status": 500})
+            db.child("withdraw").child(mitra_id).child("totalPrice").child(user_book).set(0)
 
         fcm_token_db = db.child("users").child("customers").child(id_user).child("FCMToken").get().val()
         token = []
