@@ -19,6 +19,11 @@ class PaymentRequestCreateSerializer(serializers.Serializer):
     customer_id = serializers.CharField(max_length=100)
     amount = serializers.IntegerField(min_value = 0)
     user_id = serializers.CharField(max_length=100)
+    book_id = serializers.CharField(max_length=100)
+    cs_id = serializers.CharField(max_length=100)
+    duration = serializers.IntegerField(min_value = 0)
+    status = serializers.IntegerField()
+    price = serializers.IntegerField(min_value = 0)
 
 class NotificationSerializers(serializers.Serializer):
     token = serializers.CharField(max_length= 1000)

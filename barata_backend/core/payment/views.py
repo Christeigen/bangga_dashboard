@@ -114,6 +114,11 @@ class PaymentRequestCreateView(APIView):
             customer_id = serializer.validated_data['customer_id']
             amount = serializer.validated_data['amount']
             user_id = serializer.validated_data["user_id"]
+            book_id = serializer.validated_data["book_id"]
+            cs_id = serializer.validated_data["cs_id"]
+            duration = serializer.validated_data["duration"]
+            status_book = serializer.validated_data["status"]
+            price = serializer.validated_data["price"]
 
             customer_id_db = database.child("users").child("customers").child(user_id).child("customerId").get().val()
 
@@ -125,13 +130,33 @@ class PaymentRequestCreateView(APIView):
                     }
                     return Response(data_error, status=status.HTTP_400_BAD_REQUEST)
                 customer_payment = customer.add_payment_request(amount, pmdb["paymentMethodId"], customer_id, type_wallet)
+                print(customer_payment.text)
                 customer.add_firebase_payment_request(customer_payment.text, user_id)
-                fcm_token_db = database.child("users").child("customers").child(user_id).child("FCMToken").get().val()
-                token = []
-                token.append(fcm_token_db)
-                customer.save_notif_firebase(customer_id, "Selesaikan pembayaran mu!", "Segera bayar dan gunakan charging station!", "waiting")
-                send_notification.send_notif(token, "Selesaikan pembayaran mu!", "Segera bayar dan gunakan charging station!")
-                return Response(json.loads(customer_payment.text), status=customer_payment.status_code)
+
+                response_json_from_xendit = json.loads(customer_payment.text)
+
+                if "actions" in response_json_from_xendit:
+                    payment_request_id = response_json_from_xendit["id"]
+                    add_book = customer.add_new_book(book_id, cs_id, customer_id, duration, status_book, price, payment_request_id)
+                    if add_book : 
+                        customer.update_book_active(user_id, book_id)
+                        fcm_token_db = database.child("users").child("customers").child(user_id).child("FCMToken").get().val()
+                        token = []
+                        token.append(fcm_token_db)
+                        customer.save_notif_firebase(customer_id, "Selesaikan pembayaran mu!", "Segera bayar dan gunakan charging station!", "waiting")
+                        send_notification.send_notif(token, "Selesaikan pembayaran mu!", "Segera bayar dan gunakan charging station!")
+                        return Response(json.loads(customer_payment.text), status=customer_payment.status_code)
+                    else :
+                        not_same = {
+                            "error" : "Failed to add new book!",
+                        }
+                        return Response(not_same, status=status.HTTP_400_BAD_REQUEST)
+                else :
+                    not_same = {
+                        "error" : "Failed to add new payment!",
+                    }
+                    return Response(not_same, status=status.HTTP_400_BAD_REQUEST)
+            
             else :
                 log_error_file = "log_error.txt"
 
@@ -144,8 +169,6 @@ class PaymentRequestCreateView(APIView):
                     "error" : "invalid data!",
                 }
                 return Response(not_same, status=status.HTTP_400_BAD_REQUEST)
-
-            
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 
