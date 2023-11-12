@@ -191,7 +191,7 @@ def customer_balance_wallet(id):
     response = requests.get(f'https://api.xendit.co/v2/payment_methods/{id}', headers=headers)
     return response
 
-def add_new_book(book_id, cs_id, customer_id, duration, status, price, payment_request_id):
+def add_new_book(book_id, cs_id, user_id, duration, status, price, payment_request_id):
 
     x = requests.get('https://timeapi.io/api/Time/current/zone?timeZone=UTC')
     if (x.status_code == 200):
@@ -206,10 +206,10 @@ def add_new_book(book_id, cs_id, customer_id, duration, status, price, payment_r
 
         data_book = {
         "csId" : cs_id,
-        "customerId" : customer_id,
+        "customerId" : user_id,
         "duration" : duration, 
         "status" : status, 
-        "totalPrice"  :price,
+        "totalPrice"  : price,
         "paymentRequestId":payment_request_id,
         "socketId" : "1",
         "orderDate" : order_date,
@@ -223,7 +223,6 @@ def add_new_book(book_id, cs_id, customer_id, duration, status, price, payment_r
 
 def update_book_active(user_id, book_id):
     db.child("users").child("customers").child(user_id).update({"bookActive":book_id})
-
 
 
 def update_status_payment(cust_id, id):
