@@ -4,7 +4,7 @@ import firebase_admin
 from firebase_admin import credentials, messaging
 import datetime
 
-cred = credentials.Certificate("/root/barata/barata_backend/core/chargingstation-17519-firebase-adminsdk-oxgx9-71e7688b45.json")
+cred = credentials.Certificate("D:/backend_django/barata_backend/core/chargingstation-17519-firebase-adminsdk-oxgx9-71e7688b45.json")
 firebase_admin.initialize_app(cred)
 
 def send_notif(registration_tokens, title, body):
