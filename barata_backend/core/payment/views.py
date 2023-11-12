@@ -137,7 +137,7 @@ class PaymentRequestCreateView(APIView):
 
                 if "actions" in response_json_from_xendit:
                     payment_request_id = response_json_from_xendit["id"]
-                    add_book = customer.add_new_book(book_id, cs_id, customer_id, duration, status_book, price, payment_request_id)
+                    add_book = customer.add_new_book(book_id, cs_id, user_id, duration, status_book, price, payment_request_id)
                     if add_book : 
                         customer.update_book_active(user_id, book_id)
                         fcm_token_db = database.child("users").child("customers").child(user_id).child("FCMToken").get().val()
@@ -149,7 +149,6 @@ class PaymentRequestCreateView(APIView):
                     else :
                         log_error_file = "log_error.txt"
 
-# Get the current timestamp
                         current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
                         with open(log_error_file, "a") as new_file:
