@@ -9,11 +9,17 @@ import {
   TableHeaderCell,
   TableBody,
   Text,
-  BadgeDelta,
+  Badge,
 } from "@tremor/react";
 
 export default function tableView({ source, selectedProvince }) {
   console.log("provinsi dipilih", selectedProvince)
+  const colors = {
+    "Active": "emerald",
+    "Charging": "yellow",
+    "Inactive": "rose",
+  };
+  
   if (selectedProvince == "All") {
     var data = source;
   } else {
@@ -23,8 +29,8 @@ export default function tableView({ source, selectedProvince }) {
   const csIds = data.map(item => item.csId).sort((a, b) => parseInt(a) - parseInt(b));
   const kpi_count = {
     total: csIds.length,
-    active: data.filter(cs => cs.status === "aktif").length,
-    inactive: data.filter(cs => cs.status === "tidak aktif" || cs.status === "charging").length
+    active: data.filter(cs => cs.status_avail === "Active").length,
+    inactive: data.filter(cs => cs.status_avail === "Inactive" || cs.status_avail === "Charging").length
   }
   console.log("kpi", kpi_count)
   const categories = [
@@ -78,9 +84,9 @@ export default function tableView({ source, selectedProvince }) {
                   <TableCell className="text-right">{item.totalDuration}</TableCell>
                   <TableCell className="text-right">{item.totalPrice}</TableCell>
                   <TableCell className="text-right">
-                    <BadgeDelta deltaType={item.deltaType} size="xs">
-                      {item.status}
-                    </BadgeDelta>
+                    <Badge color={colors[item.status_avail]} size="xs">
+                      {item.status_avail}
+                    </Badge>
                   </TableCell>
                 </TableRow>
               ))}
