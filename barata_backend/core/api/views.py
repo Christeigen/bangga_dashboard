@@ -158,6 +158,17 @@ class MitraDataView(APIView):
             return Response(transformed_data)
         except Exception as e:
             return Response({'error': str(e)}, status=500)
+        
+class WithdrawDataView(APIView):
+    def get(self, request):
+        firebase_url = 'https://chargingstation-17519-default-rtdb.firebaseio.com/withdraw.json'
+        try:
+            response = requests.get(firebase_url)
+            data = response.json()
+            transformed_data = [{'key': key, 'data': value} for key, value in data.items()]
+            return Response(transformed_data)
+        except Exception as e:
+            return Response({'error': str(e)}, status=500)
 
 class SendEmailWithAttachment(APIView):
     def post(self, request, *args, **kwargs):
