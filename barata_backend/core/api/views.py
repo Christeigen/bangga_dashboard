@@ -166,7 +166,19 @@ class WithdrawDataView(APIView):
             response = requests.get(firebase_url)
             data = response.json()
             transformed_data = [{'key': key, 'data': value} for key, value in data.items()]
-            return Response(transformed_data)
+            withdrawData = []
+            for i in range(len(transformed_data)):
+                try:
+                    priceData = transformed_data[i]["data"]["totalPrice"]
+                    withdraw = transformed_data[i]["data"]["withdraw"]
+                    for key in priceData.keys():
+                        transformed_data[i]["data"]["totalPrice"][key]["createdAt"] = datetime.utcfromtimestamp(transformed_data[i]["data"]["totalPrice"][key]["createdAt"]/1000).strftime('%Y/%m/%d %H:%M:%S')
+                    for key in withdraw.keys():
+                        transformed_data[i]["data"]["withdraw"][key]["createdAt"] = datetime.utcfromtimestamp(transformed_data[i]["data"]["withdraw"][key]["createdAt"]/1000).strftime('%Y/%m/%d %H:%M:%S')
+                    withdrawData.append(transformed_data[i])
+                except:
+                    pass
+            return Response(withdrawData)
         except Exception as e:
             return Response({'error': str(e)}, status=500)
 
