@@ -187,6 +187,31 @@ def add_firebase_payment_request(pr_data, user_id):
    
     db.child("payment_request").child(customerId).child(id).set(data_fb)
 
+
+def add_firebase_payment_request_v2(customerId, amount, payment_request_id):
+    
+
+    x = requests.get('https://timeapi.io/api/Time/current/zone?timeZone=UTC')
+    if (x.status_code == 200):
+        time_now = json.loads(x.text)
+        datetimenowinhere = time_now["dateTime"]
+        et_tz = tz.gettz("UTC")
+        datetimenowinhere_date = parser.parse(datetimenowinhere)
+        timestampcreatedat = datetimenowinhere_date + timedelta(minutes=5) 
+        expired_at = (timestampcreatedat).replace(tzinfo=timezone.utc).timestamp() * 1e3
+   
+        data_fb = {
+            "paymentMethodId" : "0",
+            "amount": amount,
+            "ewallet":"E-BANGGA",
+            "successDate" : 0,
+            "expired_at" : expired_at, 
+            "status": 0,
+            "action": "0"
+        }
+    
+        db.child("payment_request").child(customerId).child(payment_request_id).set(data_fb)
+
 def customer_balance_wallet(id):
     response = requests.get(f'https://api.xendit.co/v2/payment_methods/{id}', headers=headers)
     return response
@@ -274,7 +299,7 @@ def update_status_payment(cust_id, id):
                 log_error_file = "log_error.txt"
 
 # Get the current timestamp
-                current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
                 with open(log_error_file, "a") as new_file:
                     new_file.write(f"[{current_time}] FAILED - USER BOOK HAVE 0 VALUE \n")
@@ -283,14 +308,15 @@ def update_status_payment(cust_id, id):
           log_error_file = "log_error.txt"
 
 # Get the current timestamp
-          current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+          current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
           with open(log_error_file, "a") as new_file:
             new_file.write(f"[{current_time}] FAILED - TIMESTAMP ERROR \n")
     
           return False
     else :
-        current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        log_error_file = "log_error.txt"
+        current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
         with open(log_error_file, "a") as new_file:
             new_file.write(f"[{current_time}] FAILED - SOCKET HAVE BOOK ACTIVE! \n")
@@ -320,14 +346,14 @@ def refund_ewallet(cust_id, id):
     if(response.status_code == 200):
         db.child("payment_request").child(cust_id).child(id).update({"status" : 500})
 
-        if user_book != 0:
+        if user_book != "0":
             db.child("book").child(user_book).update({"socketId":"1","status": 500})
             db.child("withdraw").child(mitra_id).child("totalPrice").child(user_book).set(0)
 
         fcm_token_db = db.child("users").child("customers").child(id_user).child("FCMToken").get().val()
         token = []
         token.append(fcm_token_db)
-        save_notif_firebase(cust_id, "Pemesanan gagal!", "Charging Station terisi, uang akan dikembalikan!", "failed")
+        save_notif_firebase(cust_id, "Pemesanan gagal!", "Charging Station terisi, uang akan dikembalikan!", "expired")
         send_notification.send_notif(token, "Pemesanan gagal!", "Charging Station terisi, uang akan dikembalikan!")
         return response
     else :
@@ -337,6 +363,43 @@ def refund_ewallet(cust_id, id):
         fcm_token_db = db.child("users").child("customers").child(id_user).child("FCMToken").get().val()
         token = []
         token.append(fcm_token_db)
-        save_notif_firebase(cust_id, "Pengembalian uang gagal!", "Harap tunggu sebentar!", "failed")
+        save_notif_firebase(cust_id, "Pengembalian uang gagal!", "Harap tunggu sebentar!", "expired")
         send_notification.send_notif(token, "Pengembalian uang gagal!", "Harap tunggu sebentar!")
         return response
+    
+def notif_failed_to_user(cust_id, id_user):
+    fcm_token_db = db.child("users").child("customers").child(id_user).child("FCMToken").get().val()
+    token = []
+    token.append(fcm_token_db)
+    save_notif_firebase(cust_id, "Pemesanan gagal!", "Charging Station terisi, uang akan dikembalikan!", "expired")
+    send_notification.send_notif(token, "Pemesanan gagal!", "Charging Station terisi, uang akan dikembalikan!")
+    
+def refund_ewallet_v2(cust_id, id):
+    users = db.child("users").child("customers").get()
+    user_book = "0"
+    id_user = "0"
+
+    for user in users.each():
+        user_data = db.child("users").child("customers").child(user.key()).child("customerId").get()
+        if(cust_id == user_data.val()):
+            book = db.child("users").child("customers").child(user.key()).child("bookActive").get()
+            user_book = book.val()
+            id_user = user.key()
+            break
+
+    db.child("users").child("customers").child(id_user).update({"bookActive":"0"})
+    book_db = db.child("book").child(user_book).child("csId").get()
+    csId = book_db.val()
+    mitra_id = db.child("charging_station").child(csId).child("idMitra").get().val()
+
+    db.child("payment_request").child(cust_id).child(id).update({"status" : 500})
+
+    if user_book != "0":
+        db.child("book").child(user_book).update({"socketId":"1","status": 500})
+        db.child("withdraw").child(mitra_id).child("totalPrice").child(user_book).set(0)
+
+    fcm_token_db = db.child("users").child("customers").child(id_user).child("FCMToken").get().val()
+    token = []
+    token.append(fcm_token_db)
+    save_notif_firebase(cust_id, "Pemesanan gagal!", "Charging Station terisi, uang akan dikembalikan!", "expired")
+    send_notification.send_notif(token, "Pemesanan gagal!", "Charging Station terisi, uang akan dikembalikan!")

@@ -9,7 +9,9 @@ from .serializers import  PaymentMethodCreateSerializer, CustomerCreateSerialize
 from payment import customer
 import pyrebase
 import json
-import datetime
+from datetime import datetime, timezone, timedelta
+import random
+import string
 from payment import send_notification
 
 firebaseConfig = {
@@ -71,7 +73,7 @@ class PaymentMethodCreateView(APIView):
                 log_error_file = "log_error.txt"
 
 # Get the current timestamp
-                current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                current_time =datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
                 with open(log_error_file, "a") as new_file:
                     new_file.write(f"[{current_time}] FAILED - CUSTOMER NOT FOUND! \n")
@@ -149,7 +151,7 @@ class PaymentRequestCreateView(APIView):
                     else :
                         log_error_file = "log_error.txt"
 
-                        current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                        current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
                         with open(log_error_file, "a") as new_file:
                             new_file.write(f"[{current_time}] FAILED - FAIL TO ADD NEW BOOK \n")
@@ -163,7 +165,8 @@ class PaymentRequestCreateView(APIView):
                     log_error_file = "log_error.txt"
 
 # Get the current timestamp
-                    current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                    current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                    
 
                     with open(log_error_file, "a") as new_file:
                         new_file.write(f"[{current_time}] FAILED - FAIL TO ADD NEW PAYMENT \n")
@@ -175,7 +178,7 @@ class PaymentRequestCreateView(APIView):
             else :
                 log_error_file = "log_error.txt"
 
-                current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
                 with open(log_error_file, "a") as new_file:
                     new_file.write(f"[{current_time}] FAILED - CUSTOMER NOT FOUND! \n")
@@ -184,6 +187,141 @@ class PaymentRequestCreateView(APIView):
                     "error" : "invalid data!",
                 }
                 return Response(not_same, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST
+                        )
+    
+class PaymentRequestCreateEMoneyView(APIView):
+    def post(self, request, *args, **kwargs):
+        serializer = PaymentRequestCreateSerializer(data=request.data)
+    
+        if serializer.is_valid():
+            type_wallet = serializer.validated_data['type_wallet']
+            customer_id = serializer.validated_data['customer_id']
+            amount = serializer.validated_data['amount']
+            user_id = serializer.validated_data["user_id"]
+            book_id = serializer.validated_data["book_id"]
+            cs_id = serializer.validated_data["cs_id"]
+            duration = serializer.validated_data["duration"]
+            status_book = serializer.validated_data["status"]
+            price = serializer.validated_data["price"]
+
+            customer_id_db = database.child("users").child("customers").child(user_id).child("customerId").get().val()
+
+            if (customer_id == customer_id_db):
+
+
+                
+                ewallets = database.child("withdraw").child(user_id).child("totalPrice").get()
+                ewalletswd = database.child("withdraw").child(user_id).child("withdraw").get()
+
+                # print(ewalletswd.val().key())
+                totalPrice = 0
+                totalWithdrawAmount = 0
+
+                try :
+                    for ewallet in ewallets.each():
+                        pricein = database.child("withdraw").child(user_id).child("totalPrice").child(ewallet.key()).child("amount").get().val()
+                        is_verify = database.child("withdraw").child(user_id).child("totalPrice").child(ewallet.key()).child("is_verif").get().val()
+                        if is_verify == 100 :
+                            totalPrice += pricein
+                except : 
+                    totalPrice = 0
+
+                try :
+                    for ewallet in ewalletswd.each():
+                        priceout = database.child("withdraw").child(user_id).child("withdraw").child(ewallet.key()).child("amount").get().val()
+                        is_verify1 = database.child("withdraw").child(user_id).child("withdraw").child(ewallet.key()).child("is_verif").get().val()
+                        if is_verify1 == 100:
+                            totalWithdrawAmount += priceout
+                except : 
+                    totalWithdrawAmount = 0
+
+
+                saldoewallet = totalPrice - totalWithdrawAmount
+                print(saldoewallet)
+
+                if saldoewallet >= amount : 
+                 
+                # customer_payment = customer.add_payment_request(amount, pmdb["paymentMethodId"], customer_id, type_wallet)
+                    karakter = string.ascii_letters + string.digits  # Kombinasi huruf besar, huruf kecil, dan angka
+                    random_string = ''.join(random.choice(karakter) for i in range(10))
+                    payment_request_id = random_string
+                    customer.add_firebase_payment_request_v2(customer_id, amount, payment_request_id)
+                
+
+                    
+                    socket_database = database.child("socket").child(cs_id).child("1").child("status").get()
+                    status_socket = socket_database.val()
+            
+                    if(status_socket == 0):
+                    # response_json_from_xendit = json.loads(customer_payment.text)
+                        add_book = customer.add_new_book(book_id, cs_id, user_id, duration, status_book, price, payment_request_id)
+                        if add_book : 
+                            customer.update_book_active(user_id, book_id)
+                            fcm_token_db = database.child("users").child("customers").child(user_id).child("FCMToken").get().val()
+                            token = []
+                            token.append(fcm_token_db)
+                            customer.save_notif_firebase(customer_id, "Selesaikan pembayaran mu!", "Segera bayar dan gunakan charging station!", "waiting")
+                            send_notification.send_notif(token, "Selesaikan pembayaran mu!", "Segera bayar dan gunakan charging station!")
+
+                            hasil = customer.update_status_payment(customer_id, payment_request_id)
+                            if hasil :
+                                created_at = database.child("book").child(book_id).child("orderDate").get().val()
+                                database.child("withdraw").child(user_id).child("withdraw").child(book_id).set({"amount" : price, "createdAt" : created_at, "is_verif" : 100})
+                                message_success = {
+                                "success" : "success book!",
+                                }
+                                return Response(message_success, status=status.HTTP_200_OK)
+                            else :
+                                customer.notif_failed_to_user(customer_id, user_id)
+                                not_same = {
+                                "error_socket" : "Failed to book because socket already used!",
+                                }
+                            return Response(not_same, status=status.HTTP_400_BAD_REQUEST)
+
+                            # return Response(json.loads(customer_payment.text), status=customer_payment.status_code)
+                        else :
+                            log_error_file = "log_error.txt"
+
+                            current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+                            with open(log_error_file, "a") as new_file:
+                                new_file.write(f"[{current_time}] FAILED - FAIL TO ADD NEW BOOK \n")
+
+                            customer.notif_failed_to_user(customer_id, user_id)
+
+
+                            not_same = {
+                                "error" : "Failed to add new book!",
+                            }
+                            return Response(not_same, status=status.HTTP_400_BAD_REQUEST)
+                    else :
+                        print("error socket")
+                        customer.notif_failed_to_user(customer_id, user_id)
+                        not_same = {
+                            "error_socket" : "Failed to book because socket already used!"
+                        }
+                        return Response(not_same, status=status.HTTP_400_BAD_REQUEST)
+                else :
+                    customer.notif_failed_to_user(customer_id, user_id)
+                    not_same = {
+                            "error" : "You dont have balance!",
+                        }
+                    return Response(not_same, status=status.HTTP_400_BAD_REQUEST)
+            else :
+                log_error_file = "log_error.txt"
+
+                current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+                with open(log_error_file, "a") as new_file:
+                    new_file.write(f"[{current_time}] FAILED - CUSTOMER NOT FOUND! \n")
+
+                customer.notif_failed_to_user(customer_id, user_id)
+                not_same = {
+                    "error" : "invalid data!",
+                }
+                return Response(not_same, status=status.HTTP_400_BAD_REQUEST)
+        customer.notif_failed_to_user(customer_id, user_id)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 
@@ -194,7 +332,7 @@ class PaymentPaidView(APIView):
             log_error_file = "log_error.txt"
 
 # Get the current timestamp
-            current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
             with open(log_error_file, "a") as new_file:
                 new_file.write(f"[{current_time}] ACCES DENIED, TOKEN NOT VALID! \n")
@@ -245,7 +383,7 @@ class NotificationSend(APIView):
             log_error_file = "log_error.txt"
 
 # Get the current timestamp
-            current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
             with open(log_error_file, "a") as new_file:
                 new_file.write(f"[{current_time}] SUCCESS - SEND NOTIFICATION \n")
@@ -255,7 +393,7 @@ class NotificationSend(APIView):
             log_error_file = "log_error.txt"
 
 # Get the current timestamp
-            current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            current_time =datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
             with open(log_error_file, "a") as new_file:
                 new_file.write(f"[{current_time}] INPUT NOT VALID!\n")
