@@ -4,6 +4,7 @@ import TentangKami from "./TentangKami";
 import TextImg from "./TextImg";
 import ImgText from "./ImgText";
 import ScrollAnimatedImage from './ScrollAnimatedImage';
+import Step from './Step'
 
 export {
     Footer,
@@ -11,5 +12,6 @@ export {
     TentangKami,
     ImgText,
     TextImg,
-    ScrollAnimatedImage
+    ScrollAnimatedImage,
+    Step
 };

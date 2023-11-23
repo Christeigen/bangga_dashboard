@@ -6,7 +6,8 @@ import ChargingStation from './ChargingStation';
 import Register from './Register';
 import HomePage from './HomePage';
 import TentangKamiPage from './TentangKamiPage';
-import ProductPage from './ProductPage'
+import ProductPage from './ProductPage';
+import ApplicationPage from './ApplicationPage'
 
 export {
     Dashboard,
@@ -17,7 +18,8 @@ export {
     ChargingStation,
     HomePage,
     TentangKamiPage,
-    ProductPage
+    ProductPage,
+    ApplicationPage
 }
 
 

@@ -87,12 +87,12 @@ export default function chargingStationView() {
 
   const totalData = groupAndSumData(combinedData, "csId")
   totalData.forEach(item => {
-    if (item.status === "aktif") {
-      item.deltaType = "increase";
-    } else if (item.status === "tidak aktif") {
-      item.deltaType = "decrease";
-    } else {
-      item.deltaType = "unchanged";
+    if (item.status === 0) {
+      item.status_avail = "Active";
+    } else if (item.status === 100) {
+      item.status_avail = "Charging";
+    } else if (item.status === 200) {
+      item.status_avail = "Inactive";
     }
   });
 
@@ -137,7 +137,7 @@ export default function chargingStationView() {
     "Papua Pegunungan",
     "Papua Barat Daya"
   ];
-  const [selectedProvince, setSelectedProvince] = useState('');
+  const [selectedProvince, setSelectedProvince] = useState('All');
 
   const handleProvinceChange = (event) => {
     setSelectedProvince(event.target.value);
@@ -154,7 +154,6 @@ export default function chargingStationView() {
           value={selectedProvince}
           onChange={handleProvinceChange}
         >
-          <option value="">Select one of them</option>
           {provinces.map((province, index) => (
             <option key={index} value={province}>
               {province}
