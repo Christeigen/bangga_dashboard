@@ -214,7 +214,6 @@ class PaymentRequestCreateEMoneyView(APIView):
                 ewallets = database.child("withdraw").child(user_id).child("totalPrice").get()
                 ewalletswd = database.child("withdraw").child(user_id).child("withdraw").get()
 
-                # print(ewalletswd.val().key())
                 totalPrice = 0
                 totalWithdrawAmount = 0
 
@@ -238,7 +237,6 @@ class PaymentRequestCreateEMoneyView(APIView):
 
 
                 saldoewallet = totalPrice - totalWithdrawAmount
-                print(saldoewallet)
 
                 if saldoewallet >= amount : 
                  
@@ -296,7 +294,6 @@ class PaymentRequestCreateEMoneyView(APIView):
                             }
                             return Response(not_same, status=status.HTTP_400_BAD_REQUEST)
                     else :
-                        print("error socket")
                         customer.notif_failed_to_user(customer_id, user_id)
                         not_same = {
                             "error_socket" : "Failed to book because socket already used!"
