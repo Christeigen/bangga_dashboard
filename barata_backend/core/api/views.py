@@ -4,9 +4,11 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.core.mail import EmailMessage
 from .serializers import EmailAttachmentSerializer, PaymentCreateSerializer, PaymentRequestSerializer
+from rest_framework.permissions import IsAuthenticated
 
 
 class BookDataView(APIView):
+    permission_classes = [IsAuthenticated]
     def get(self, request):
         firebase_url = 'https://charging-station-clone-default-rtdb.firebaseio.com/book.json'
         try:
@@ -18,6 +20,7 @@ class BookDataView(APIView):
             return Response({'error': str(e)}, status=500)
         
 class ChargingStationDataView(APIView):
+    permission_classes = [IsAuthenticated]
     def get(self, request):
         firebase_url = 'https://charging-station-clone-default-rtdb.firebaseio.com/charging_station.json'
         try:
@@ -32,6 +35,7 @@ class ChargingStationDataView(APIView):
             return Response({'error': str(e)}, status=500)
         
 class CustomersDataView(APIView):
+    permission_classes = [IsAuthenticated]
     def get(self, request):
         firebase_url = 'https://charging-station-clone-default-rtdb.firebaseio.com/users/customers.json'
         try:
@@ -43,6 +47,7 @@ class CustomersDataView(APIView):
             return Response({'error': str(e)}, status=500)
         
 class MitraDataView(APIView):
+    permission_classes = [IsAuthenticated]
     def get(self, request):
         firebase_url = 'https://charging-station-clone-default-rtdb.firebaseio.com/users/mitra.json'
         try:

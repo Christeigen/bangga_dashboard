@@ -3,6 +3,8 @@ import { Outlet } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import Header from './Header';
 import axios from 'axios';
+import axiosInstance from '/src/components/shared/axios';
+
 
 export default function Layout() {
 
@@ -25,12 +27,22 @@ export default function Layout() {
             try {
                 const [bookResponse, chargingstationResponse, customerResponse, mitraResponse] = await Promise.all([
 
-                    axios.get('https://bangga-evcs.id/api/bookdata/'),
-                    axios.get('https://bangga-evcs.id/api/chargingstationdata/'),
-                    axios.get('https://bangga-evcs.id/api/customerdata/'),
-                    axios.get('https://bangga-evcs.id/api/mitradata/')
+                    // axios.get('https://bangga-evcs.id/api/bookdata/'),
+                    // axios.get('https://bangga-evcs.id/api/chargingstationdata/'),
+                    // axios.get('https://bangga-evcs.id/api/customerdata/'),
+                    // axios.get('https://bangga-evcs.id/api/mitradata/')
+
+                    axiosInstance.get('bookdata/').catch((error) => {console.log(error)} ),
+                    axiosInstance.get('chargingstationdata/'),
+                    axiosInstance.get('customerdata/'),
+                    axiosInstance.get('mitradata/')
                     
                 ]);
+
+                console.log(bookResponse)
+                console.log(chargingstationResponse)
+                console.log(customerResponse)
+                console.log(mitraResponse)
 
                 const filteredBookData = bookResponse.data
                 .sort((a, b) => {
