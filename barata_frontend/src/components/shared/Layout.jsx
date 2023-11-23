@@ -27,15 +27,31 @@ export default function Layout() {
             try {
                 const [bookResponse, chargingstationResponse, customerResponse, mitraResponse] = await Promise.all([
 
-                    // axios.get('https://bangga-evcs.id/api/bookdata/'),
-                    // axios.get('https://bangga-evcs.id/api/chargingstationdata/'),
-                    // axios.get('https://bangga-evcs.id/api/customerdata/'),
-                    // axios.get('https://bangga-evcs.id/api/mitradata/')
+                    // ==== Get data using https://bangga-evcs.id
 
-                    axiosInstance.get('bookdata/').catch((error) => {console.log(error)} ),
-                    axiosInstance.get('chargingstationdata/'),
-                    axiosInstance.get('customerdata/'),
-                    axiosInstance.get('mitradata/')
+                    axios.get('https://bangga-evcs.id/api/bookdata/'),
+                    axios.get('https://bangga-evcs.id/api/chargingstationdata/'),
+                    axios.get('https://bangga-evcs.id/api/customerdata/'),
+                    axios.get('https://bangga-evcs.id/api/mitradata/'),
+                    axios.get('https://bangga-evcs.id/api/withdrawdata/')
+                    
+                    // === Get data from localhost
+                    
+                    // axios.get('http://127.0.0.1:8000/api/bookdata/'),
+                    // axios.get('http://127.0.0.1:8000/api/chargingstationdata/'),
+                    // axios.get('http://127.0.0.1:8000/api/customerdata/'),
+                    // axios.get('http://127.0.0.1:8000/api/mitradata/'),
+                    // axios.get('http://127.0.0.1:8000/api/withdrawdata/')
+
+
+                    // API using JWT ( set up the api url from axios.jsx in shared/company_profile/)
+                
+                    // axiosInstance.get('bookdata/').catch((error) => {console.log(error)} ),
+                    // axiosInstance.get('chargingstationdata/'),
+                    // axiosInstance.get('customerdata/'),
+                    // axiosInstance.get('mitradata/'),
+                    // axiosInstance.get('withdrawdata/')
+
                     
                 ]);
 

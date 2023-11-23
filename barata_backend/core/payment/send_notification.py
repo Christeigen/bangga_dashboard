@@ -5,6 +5,7 @@ from firebase_admin import credentials, messaging
 import datetime
 
 cred = credentials.Certificate("C:/Users/Geraldus Wilsen/Documents/ProjectBarata/barata_dashboard/barata_backend/core/chargingstation-17519-firebase-adminsdk-oxgx9-71e7688b45.json")
+# cred = credentials.Certificate("D:/Egen/Kuliah/magang/barata_dashboard/barata_backend/core/chargingstation-17519-firebase-adminsdk-oxgx9-71e7688b45.json")
 firebase_admin.initialize_app(cred)
 
 def send_notif(registration_tokens, title, body):
@@ -14,7 +15,7 @@ def send_notif(registration_tokens, title, body):
             body=body
         ),tokens=registration_tokens
     )
-    response = messaging.send_multicast(message)
+    messaging.send_multicast(message)
     log_error_file = "log_error.txt"
    
 
