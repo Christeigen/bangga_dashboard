@@ -20,12 +20,13 @@ export default function Layout() {
     const [chargingstationData, setChargingstationData] = useState([]);
     const [customerData, setCustomerData] = useState([]);
     const [mitraData, setMitraData] = useState([]);
+    const [withdrawData, setWithdrawData] = useState([]);
     const [notificationMessages, setNotificationMessages] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const [bookResponse, chargingstationResponse, customerResponse, mitraResponse] = await Promise.all([
+                const [bookResponse, chargingstationResponse, customerResponse, mitraResponse,withdrawResponse] = await Promise.all([
 
                     // ==== Get data using https://bangga-evcs.id
 
@@ -59,6 +60,7 @@ export default function Layout() {
                 console.log(chargingstationResponse)
                 console.log(customerResponse)
                 console.log(mitraResponse)
+                console.log(withdrawResponse)
 
                 const filteredBookData = bookResponse.data
                 .sort((a, b) => {
@@ -74,6 +76,7 @@ export default function Layout() {
 
                 setCustomerData(customerResponse.data);
                 setMitraData(mitraResponse.data);
+                setWithdrawData(withdrawResponse.data);
                 setLoading(false);
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -122,7 +125,7 @@ export default function Layout() {
       <div className="flex flex-col flex-1">
         <Header notif={notificationMessages} />
         <div className="flex-1 p-4 min-h-0 overflow-auto">
-          <Outlet context = {[bookData, chargingstationData, customerData, mitraData]}/>
+          <Outlet context = {[bookData, chargingstationData, customerData, mitraData, withdrawData]}/>
         </div>
       </div>
     </div>
