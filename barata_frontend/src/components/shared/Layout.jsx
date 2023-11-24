@@ -21,7 +21,6 @@ export default function Layout() {
     const [customerData, setCustomerData] = useState([]);
     const [mitraData, setMitraData] = useState([]);
     const [withdrawData, setWithdrawData] = useState([]);
-    const [withdrawData, setWithdrawData] = useState([]);
     const [notificationMessages, setNotificationMessages] = useState([]);
 
     useEffect(() => {
@@ -57,11 +56,11 @@ export default function Layout() {
                     
                 ]);
 
-                console.log(bookResponse)
-                console.log(chargingstationResponse)
-                console.log(customerResponse)
-                console.log(mitraResponse)
-                console.log(withdrawResponse)
+                // console.log(bookResponse)
+                // console.log(chargingstationResponse)
+                // console.log(customerResponse)
+                // console.log(mitraResponse)
+                // console.log(withdrawResponse)
 
                 const filteredBookData = bookResponse.data
                 .sort((a, b) => {
