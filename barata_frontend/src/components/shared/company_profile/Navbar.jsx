@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { Link,NavLink, useLocation } from "react-router-dom";
+import { useState } from "react";
+import { NavLink } from "react-router-dom";
 import close from '/src/assets/close.svg';
 import bangga_logo from '/src/assets/bangga_logo.png';
 import menu from '/src/assets/menu.svg';
