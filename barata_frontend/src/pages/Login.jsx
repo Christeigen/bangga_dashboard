@@ -1,9 +1,9 @@
-// import barataLogo from '/src/assets/barata.png'
 import { useState, useContext } from 'react'
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "/src/firebase"
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../context/AuthContext';
+import axiosInstance from '/src/components/shared/axios';
 
 const Login = () => {
 
@@ -52,6 +52,18 @@ const Login = () => {
                 setErrorMessage(error_message)
                 setError(true);
             });
+
+        // store JWT token
+        axiosInstance.post(`token/`, {
+            username: 'bangga',
+            password: 'sengenfik'
+        })
+        .then((res) =>{
+            localStorage.setItem('access_token', res.data.access);
+            localStorage.setItem('refresh_token', res.data.refresh);
+            axiosInstance.defaults.headers['Authorization'] =
+                'JWT ' + localStorage.getItem('access_token');
+        });
     }
 
     // Hide Password

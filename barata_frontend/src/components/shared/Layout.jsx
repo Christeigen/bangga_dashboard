@@ -3,6 +3,8 @@ import { Outlet } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import Header from './Header';
 import axios from 'axios';
+import axiosInstance from '/src/components/shared/axios';
+
 
 export default function Layout() {
 
@@ -19,27 +21,47 @@ export default function Layout() {
     const [customerData, setCustomerData] = useState([]);
     const [mitraData, setMitraData] = useState([]);
     const [withdrawData, setWithdrawData] = useState([]);
+    const [withdrawData, setWithdrawData] = useState([]);
     const [notificationMessages, setNotificationMessages] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const [bookResponse, chargingstationResponse, customerResponse, mitraResponse] = await Promise.all([
+                const [bookResponse, chargingstationResponse, customerResponse, mitraResponse,withdrawResponse] = await Promise.all([
 
-                    // axios.get('https://bangga-evcs.id/api/bookdata/'),
-                    // axios.get('https://bangga-evcs.id/api/chargingstationdata/'),
-                    // axios.get('https://bangga-evcs.id/api/customerdata/'),
-                    // axios.get('https://bangga-evcs.id/api/mitradata/')
-                    // axios.get('http://127.0.0.1:8000/api/bookdata/'),
-                    // axios.get('http://127.0.0.1:8000/api/chargingstationdata/'),
-                    // axios.get('http://127.0.0.1:8000/api/customerdata/'),
-                    // axios.get('http://127.0.0.1:8000/api/mitradata/')
+                    // ==== Get data using https://bangga-evcs.id
+
                     axios.get('https://bangga-evcs.id/api/bookdata/'),
                     axios.get('https://bangga-evcs.id/api/chargingstationdata/'),
                     axios.get('https://bangga-evcs.id/api/customerdata/'),
                     axios.get('https://bangga-evcs.id/api/mitradata/'),
                     axios.get('https://bangga-evcs.id/api/withdrawdata/')
+                    
+                    // === Get data from localhost
+                    
+                    // axios.get('http://127.0.0.1:8000/api/bookdata/'),
+                    // axios.get('http://127.0.0.1:8000/api/chargingstationdata/'),
+                    // axios.get('http://127.0.0.1:8000/api/customerdata/'),
+                    // axios.get('http://127.0.0.1:8000/api/mitradata/'),
+                    // axios.get('http://127.0.0.1:8000/api/withdrawdata/')
+
+
+                    // API using JWT ( set up the api url from axios.jsx in shared/company_profile/)
+                
+                    // axiosInstance.get('bookdata/').catch((error) => {console.log(error)} ),
+                    // axiosInstance.get('chargingstationdata/'),
+                    // axiosInstance.get('customerdata/'),
+                    // axiosInstance.get('mitradata/'),
+                    // axiosInstance.get('withdrawdata/')
+
+                    
                 ]);
+
+                console.log(bookResponse)
+                console.log(chargingstationResponse)
+                console.log(customerResponse)
+                console.log(mitraResponse)
+                console.log(withdrawResponse)
 
                 const filteredBookData = bookResponse.data
                 .sort((a, b) => {
@@ -55,6 +77,7 @@ export default function Layout() {
 
                 setCustomerData(customerResponse.data);
                 setMitraData(mitraResponse.data);
+                setWithdrawData(withdrawResponse.data);
                 setLoading(false);
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -103,7 +126,7 @@ export default function Layout() {
       <div className="flex flex-col flex-1">
         <Header notif={notificationMessages} />
         <div className="flex-1 p-4 min-h-0 overflow-auto">
-          <Outlet context = {[bookData, chargingstationData, customerData, mitraData]}/>
+          <Outlet context = {[bookData, chargingstationData, customerData, mitraData, withdrawData]}/>
         </div>
       </div>
     </div>
