@@ -18,6 +18,7 @@ export default function Layout() {
     const [chargingstationData, setChargingstationData] = useState([]);
     const [customerData, setCustomerData] = useState([]);
     const [mitraData, setMitraData] = useState([]);
+    const [withdrawData, setWithdrawData] = useState([]);
     const [notificationMessages, setNotificationMessages] = useState([]);
 
     useEffect(() => {
@@ -29,11 +30,15 @@ export default function Layout() {
                     // axios.get('https://bangga-evcs.id/api/chargingstationdata/'),
                     // axios.get('https://bangga-evcs.id/api/customerdata/'),
                     // axios.get('https://bangga-evcs.id/api/mitradata/')
-                    axios.get('http://127.0.0.1:8000/api/bookdata/'),
-                    axios.get('http://127.0.0.1:8000/api/chargingstationdata/'),
-                    axios.get('http://127.0.0.1:8000/api/customerdata/'),
-                    axios.get('http://127.0.0.1:8000/api/mitradata/')
-                    
+                    // axios.get('http://127.0.0.1:8000/api/bookdata/'),
+                    // axios.get('http://127.0.0.1:8000/api/chargingstationdata/'),
+                    // axios.get('http://127.0.0.1:8000/api/customerdata/'),
+                    // axios.get('http://127.0.0.1:8000/api/mitradata/')
+                    axios.get('https://bangga-evcs.id/api/bookdata/'),
+                    axios.get('https://bangga-evcs.id/api/chargingstationdata/'),
+                    axios.get('https://bangga-evcs.id/api/customerdata/'),
+                    axios.get('https://bangga-evcs.id/api/mitradata/'),
+                    axios.get('https://bangga-evcs.id/api/withdrawdata/')
                 ]);
 
                 const filteredBookData = bookResponse.data
