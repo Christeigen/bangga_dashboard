@@ -188,25 +188,15 @@ def add_firebase_payment_request(pr_data, user_id):
     db.child("payment_request").child(customerId).child(id).set(data_fb)
 
 
-def add_firebase_payment_request_v2(customerId, amount, payment_request_id):
-    
-
-    x = requests.get('https://timeapi.io/api/Time/current/zone?timeZone=UTC')
-    if (x.status_code == 200):
-        time_now = json.loads(x.text)
-        datetimenowinhere = time_now["dateTime"]
-        et_tz = tz.gettz("UTC")
-        datetimenowinhere_date = parser.parse(datetimenowinhere)
-        timestampcreatedat = datetimenowinhere_date + timedelta(minutes=5) 
-        expired_at = (timestampcreatedat).replace(tzinfo=timezone.utc).timestamp() * 1e3
+def add_firebase_payment_request_v2(customerId, amount, payment_request_id, expired_at):
    
         data_fb = {
             "paymentMethodId" : "0",
             "amount": amount,
-            "ewallet":"E-BANGGA",
+            "ewallet":"BANGGA-PAY",
             "successDate" : 0,
             "expired_at" : expired_at, 
-            "status": 0,
+            "status": 100,
             "action": "0"
         }
     
@@ -246,8 +236,41 @@ def add_new_book(book_id, cs_id, user_id, duration, status, price, payment_reque
     else :
         return False
 
+
+def add_new_book_v2(book_id, cs_id, user_id, duration, status, price, payment_request_id, order_date, expired_at):
+
+    data_book = {
+    "csId" : cs_id,
+    "customerId" : user_id,
+    "duration" : duration, 
+    "status" : status, 
+    "totalPrice"  : price,
+    "paymentRequestId":payment_request_id,
+    "socketId" : "1",
+    "orderDate" : order_date,
+    "expiredAt" : expired_at
+    }
+
+    db.child("book").child(book_id).set(data_book)
+
 def update_book_active(user_id, book_id):
     db.child("users").child("customers").child(user_id).update({"bookActive":book_id})
+
+def update_status_payment_v2(csId, user_book, datetimenowinhere_date, timestampcreatedat, totalPrice, id_user, cust_id):
+    db.child("socket").child(csId).child("1").update({"bookActive":user_book, "createdAt":(datetimenowinhere_date).replace(tzinfo=timezone.utc).timestamp() * 1e3 , "expiredAt": (timestampcreatedat).replace(tzinfo=timezone.utc).timestamp() * 1e3 ,"status": 100})
+    mitra_id = db.child("charging_station").child(csId).child("idMitra").get().val()
+    db.child("withdraw").child(mitra_id).child("totalPrice").child(user_book).set(totalPrice)
+
+    fcm_token_db = db.child("users").child("customers").child(id_user).child("FCMToken").get().val()
+    fcm_token_db_mitra = db.child("users").child("mitra").child(mitra_id).child("FCMToken").get().val()
+    token = []
+    token1 = []
+    token.append(fcm_token_db)
+    token1.append(fcm_token_db_mitra)
+    save_notif_firebase(cust_id, "Pembayaran sukses!", "Segera scan qr untuk melakukan pengisian!", "success")
+    send_notification.send_notif(token, "Pembayaran sukses!", "Segera scan qr untuk melakukan pengisian!")
+    send_notification.send_notif(token1, "Charging Station dipesan!!", "Cek aplikasi untuk memantau pengisian!")
+
 
 
 def update_status_payment(cust_id, id):
@@ -278,12 +301,13 @@ def update_status_payment(cust_id, id):
           timestampcreatedat = datetimenowinhere_date + timedelta(minutes=30) 
           if user_book != "0":
                 db.child("socket").child(csId).child("1").update({"bookActive":user_book, "createdAt":(datetimenowinhere_date).replace(tzinfo=timezone.utc).timestamp() * 1e3 , "expiredAt": (timestampcreatedat).replace(tzinfo=timezone.utc).timestamp() * 1e3 ,"status": 100})
+                mitra_id = db.child("charging_station").child(csId).child("idMitra").get().val()
+                db.child("withdraw").child(mitra_id).child("totalPrice").child(user_book).set(totalPrice)
 
                 db.child("payment_request").child(cust_id).child(id).update({"status" : 100, "successDate": (datetimenowinhere_date).replace(tzinfo=timezone.utc).timestamp() * 1e3 })
                 
                 db.child("book").child(user_book).update({"socketId":"1", "expiredAt": (timestampcreatedat).replace(tzinfo=timezone.utc).timestamp() * 1e3 ,"status": 100})
 
-                db.child("withdraw").child(mitra_id).child("totalPrice").child(user_book).set(totalPrice.val())
 
                 fcm_token_db = db.child("users").child("customers").child(id_user).child("FCMToken").get().val()
                 fcm_token_db_mitra = db.child("users").child("mitra").child(mitra_id).child("FCMToken").get().val()
