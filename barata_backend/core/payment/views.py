@@ -10,6 +10,7 @@ from payment import customer
 import pyrebase
 import json
 from datetime import datetime, timezone, timedelta
+from dateutil import parser, tz
 import random
 import string
 from payment import send_notification
@@ -208,9 +209,6 @@ class PaymentRequestCreateEMoneyView(APIView):
             customer_id_db = database.child("users").child("customers").child(user_id).child("customerId").get().val()
 
             if (customer_id == customer_id_db):
-
-
-                
                 ewallets = database.child("withdraw").child(user_id).child("totalPrice").get()
                 ewalletswd = database.child("withdraw").child(user_id).child("withdraw").get()
 
@@ -241,57 +239,57 @@ class PaymentRequestCreateEMoneyView(APIView):
                 if saldoewallet >= amount : 
                  
                 # customer_payment = customer.add_payment_request(amount, pmdb["paymentMethodId"], customer_id, type_wallet)
-                    karakter = string.ascii_letters + string.digits  # Kombinasi huruf besar, huruf kecil, dan angka
-                    random_string = ''.join(random.choice(karakter) for i in range(10))
-                    payment_request_id = random_string
-                    customer.add_firebase_payment_request_v2(customer_id, amount, payment_request_id)
-                
-
+                    
                     
                     socket_database = database.child("socket").child(cs_id).child("1").child("status").get()
                     status_socket = socket_database.val()
             
                     if(status_socket == 0):
                     # response_json_from_xendit = json.loads(customer_payment.text)
-                        add_book = customer.add_new_book(book_id, cs_id, user_id, duration, status_book, price, payment_request_id)
-                        if add_book : 
-                            customer.update_book_active(user_id, book_id)
-                            fcm_token_db = database.child("users").child("customers").child(user_id).child("FCMToken").get().val()
-                            token = []
-                            token.append(fcm_token_db)
-                            customer.save_notif_firebase(customer_id, "Selesaikan pembayaran mu!", "Segera bayar dan gunakan charging station!", "waiting")
-                            send_notification.send_notif(token, "Selesaikan pembayaran mu!", "Segera bayar dan gunakan charging station!")
+                        x = requests.get('https://timeapi.io/api/Time/current/zone?timeZone=UTC')
+                        if x.status_code == 200:
+                            time_now = json.loads(x.text)
+                            datetimenowinhere = time_now["dateTime"]
+                            datetimenowinhere_date = parser.parse(datetimenowinhere)
+                            timestampcreatedat = datetimenowinhere_date + timedelta(minutes=30) 
+                            order_date = (datetimenowinhere_date).replace(tzinfo=timezone.utc).timestamp() * 1e3
+                            expired_at = (timestampcreatedat).replace(tzinfo=timezone.utc).timestamp() * 1e3
+                            karakter = string.ascii_letters + string.digits  # Kombinasi huruf besar, huruf kecil, dan angka
+                            random_string = ''.join(random.choice(karakter) for i in range(10))
+                            payment_request_id = random_string
 
-                            hasil = customer.update_status_payment(customer_id, payment_request_id)
-                            if hasil :
-                                created_at = database.child("book").child(book_id).child("orderDate").get().val()
-                                database.child("withdraw").child(user_id).child("withdraw").child(book_id).set({"amount" : price, "createdAt" : created_at, "is_verif" : 100})
-                                message_success = {
+
+                            customer.add_firebase_payment_request_v2(customer_id, amount, payment_request_id, expired_at)
+
+                            customer.add_new_book_v2(book_id, cs_id, user_id, duration, status_book, price, payment_request_id, order_date, expired_at)
+
+                            customer.update_book_active(user_id, book_id)
+
+                            setTotalPrice = {
+                                "amount":amount,
+                                "createdAt" : order_date,
+                                "imagePath" : "0",
+                                "is_verif" : 100,
+                                "name" : user_id,
+                                "noRek" : "0",
+                                "tipe" : "in"
+                            }
+
+                            customer.update_status_payment_v2(cs_id, book_id, datetimenowinhere_date, timestampcreatedat, setTotalPrice, user_id, customer_id)
+
+                            database.child("withdraw").child(user_id).child("withdraw").child(book_id).set({"amount" : price, "createdAt" : order_date, "is_verif" : 100})
+
+
+                            message_success = {
                                 "success" : "success book!",
                                 }
-                                return Response(message_success, status=status.HTTP_200_OK)
-                            else :
-                                customer.notif_failed_to_user(customer_id, user_id)
-                                not_same = {
-                                "error_socket" : "Failed to book because socket already used!",
-                                }
-                            return Response(not_same, status=status.HTTP_400_BAD_REQUEST)
-
-                            # return Response(json.loads(customer_payment.text), status=customer_payment.status_code)
+                            return Response(message_success, status=status.HTTP_200_OK)
+                        
                         else :
-                            log_error_file = "log_error.txt"
-
-                            current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-
-                            with open(log_error_file, "a") as new_file:
-                                new_file.write(f"[{current_time}] FAILED - FAIL TO ADD NEW BOOK \n")
-
                             customer.notif_failed_to_user(customer_id, user_id)
-
-
                             not_same = {
-                                "error" : "Failed to add new book!",
-                            }
+                                "error" : "Error get time",
+                                }
                             return Response(not_same, status=status.HTTP_400_BAD_REQUEST)
                     else :
                         customer.notif_failed_to_user(customer_id, user_id)
