@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import Layout from './components/shared/Layout'
-import { Dashboard, Login, Register, OtherPage, DownloadPage, ChargingStation, HomePage, TentangKamiPage, ProductPage } from './pages'
+import { Dashboard, Login, Register, OtherPage, DownloadPage, ChargingStation, HomePage, TentangKamiPage, ProductPage, ApplicationPage } from './pages'
 import { useContext } from 'react'
 import { AuthContext } from './context/AuthContext'
 
@@ -19,6 +19,7 @@ function App() {
                 <Route path="/home" element={<HomePage />} />
                 <Route path="/tentang-kami" element={<TentangKamiPage />} />
                 <Route path="/produk" element={<ProductPage />} />
+                <Route path="/aplikasi" element={<ApplicationPage />} />
                 <Route path="/" element={<RequireAuth><Layout /></RequireAuth>}>
                     <Route path="dashboard" element={<Dashboard />} />
                     <Route path="otherpage" element={<OtherPage />} />
