@@ -16,6 +16,7 @@ export default function Navbar({ color }) {
 
       <ul className="list-none sm:flex hidden justify-end items-center flex-1">
         {navLinks.map((nav, index) => (
+          console.log("nav", nav),
           <li key={nav.id}>
             <NavLink
               to={`/${nav.id}`}

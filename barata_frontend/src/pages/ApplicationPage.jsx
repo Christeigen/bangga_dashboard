@@ -40,13 +40,13 @@ const ApplicationPage = () => {
                         isSquare={true} />
                     <Step
                         title="Pesan"
-                        paragraph="Aplikasi Bangga telah terintegrasi dengan layanan Google Maps sehingga anda dapat dengan mudah mencari lokasi charging station terdekat dari tempat anda saat ini"
+                        paragraph="Pesan Charging Station yang ada didekatmu hanya melalui Aplikasi Bangga"
                         imgSrc={step2}
                         imgAlt="Pesan"
                         isSquare={true} />
                     <Step
                         title="Bayar"
-                        paragraph="Aplikasi Bangga telah terintegrasi dengan layanan Google Maps sehingga anda dapat dengan mudah menBayar charging station terdekat dari tempat anda saat ini"
+                        paragraph=" Bayar secara cepat dan instan untuk mendapatkan kemudahan dalam memesan Charging Station"
                         imgSrc={step3}
                         imgAlt="Bayar"
                         isSquare={true} />
@@ -61,13 +61,13 @@ const ApplicationPage = () => {
                 <div className="flex flex-row gap-x-32 justify-center mt-[-300px]">
                     <Step
                         title="Cari Lokasi"
-                        paragraph="Aplikasi Bangga telah terintegrasi dengan layanan Google Maps sehingga anda dapat dengan mudah mencari lokasi charging station terdekat dari tempat anda saat ini"
+                        paragraph="Scan QR dan connect bluetooth untuk menghubungkan dan menggunakan Charging Station"
                         imgSrc={step4}
                         imgAlt="Cari Lokasi"
                         isSquare={true} />
                     <Step
                         title="Pesan"
-                        paragraph="Aplikasi Bangga telah terintegrasi dengan layanan Google Maps sehingga anda dapat dengan mudah mencari lokasi charging station terdekat dari tempat anda saat ini"
+                        paragraph="Pantau status Charging station mu melalui aplikasi secara real-time dan tunggu hingga pesanan mu berakhir"
                         imgSrc={step5}
                         imgAlt="Pesan"
                         isSquare={true} />
