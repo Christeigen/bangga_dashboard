@@ -6,8 +6,8 @@ import {
     TableRow,
 } from "@tremor/react";
 import { useState } from 'react';
-import check from '/src/assets/check.jpg'
-import cross from '/src/assets/cross.jpg'
+import { HiOutlineCheck, HiOutlineX } from "react-icons/hi";
+import Modal from '/src/components/modal/modalFb'
 
 export default function tableTopUp({ source, datefilter }) {
 
@@ -26,19 +26,15 @@ export default function tableTopUp({ source, datefilter }) {
     const filteredData = source.filter((item) => {
         if (datefilter && datefilter.from && datefilter.to) {
             const totalPriceKeys = Object.keys(item.data.totalPrice);
-            console.log("from", datefilter.from)
-            console.log("to", datefilter.to)
-            // Check if any totalPrice item has a createdAt within the date range
+
             const totalPriceWithinRange = totalPriceKeys.some((key) => {
                 const createdAt = new Date(item.data.totalPrice[key].createdAt);
                 return createdAt >= datefilter.from && createdAt <= datefilter.to;
             });
 
-            // Return true if either totalPrice or withdraw has a createdAt within the date range
             return totalPriceWithinRange;
         }
 
-        // If no date filter, return true for all items
         return true;
     });
 
@@ -49,6 +45,7 @@ export default function tableTopUp({ source, datefilter }) {
                 <TableHeaderCell className="text-center">Bank Account Number</TableHeaderCell>
                 <TableHeaderCell className="text-center">Created At</TableHeaderCell>
                 <TableHeaderCell className="text-center">Amount</TableHeaderCell>
+                <TableHeaderCell className="text-center">Image Path</TableHeaderCell>
                 <TableHeaderCell className="text-center">Payment Receipt</TableHeaderCell>
                 <TableHeaderCell className="text-center">Confirmation</TableHeaderCell>
                 <TableHeaderCell className="text-center">Status</TableHeaderCell>
@@ -61,13 +58,14 @@ export default function tableTopUp({ source, datefilter }) {
                             <TableCell key={`noRek-${cellIndex}`} className="text-center">{item.data.totalPrice[key].noRek}</TableCell>
                             <TableCell key={`createdAt-${cellIndex}`} className="text-center">{item.data.totalPrice[key].createdAt}</TableCell>
                             <TableCell key={`amount-${cellIndex}`} className="text-center">{item.data.totalPrice[key].amount}</TableCell>
+                            <TableCell key={`imgpath-${cellIndex}`} className="text-center">{item.data.totalPrice[key].imagePath}</TableCell>
                             <TableCell key={`paymentReceipt-${cellIndex}`} className="text-center">
-                                <button className={`px-2 py-2 text-white text-sm bg-blue-900 rounded-lg hover:bg-black`}>See Details</button>
+                                <Modal custKey={item.key} imgPath={item.data.totalPrice[key].imagePath}/>
                             </TableCell>
                             <TableCell key={`confirmation-${cellIndex}`} className="justify-center">
                                 <div className="flex flex-row gap-2 justify-center">
-                                    <button onClick={handleAccept}><img src={check} className="w-8" /></button>
-                                    <button onClick={handleReject}><img src={cross} className="w-8" /></button>
+                                    <button onClick={handleAccept} className="px-2 py-2 text-green-900 text-sm bg-green-200 rounded-lg flex flex-row">Accept</button>
+                                    <button onClick={handleReject} className="px-2 py-2 text-red-900 text-sm bg-red-200 rounded-lg flex flex-row">Reject</button>
                                 </div>
                             </TableCell>
                             <TableCell key={`status-${cellIndex}`} className="text-center">{item.data.totalPrice[key].status}</TableCell>

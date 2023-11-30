@@ -59,7 +59,7 @@ export default function AdminVerif() {
     };
     return (
         <Card>
-            <Title>Verifikasi Admin</Title>
+            <Title>Admin Verification</Title>
             <TabGroup className="mt-4">
                 <div className="flex flex-row gap-8 max-h-[37px]">
                     <TabList variant="solid">

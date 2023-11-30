@@ -11,7 +11,7 @@ import {
   TabGroup,
   Grid,
 } from "@tremor/react";
-import cs from '/src/assets/cs.jpg'
+import cs from '/src/assets/csBanggaCrop.png'
 import cheap from '/src/assets/keunggulan_1.png'
 import efficient from '/src/assets/keunggulan_2.png'
 import easy from '/src/assets/keunggulan_3.png'
@@ -77,12 +77,12 @@ const ProductPage = () => {
       <div className="px-16">
         <Navbar />
       </div>
-      <div className="space-y-32">
-        <div className="diff flex flex-col px-16 gap-y-32">
-          <div className="image&desc flex flex-row gap-x-32">
-            <img src={cs} className="cs basis-3/12 max-w-screen-sm" />
-            <div className="desc basis-8/12 flex flex-col gap-y-12">
-              <h1 className="text-4xl font-bold text-sky-900">BANGGA EVCS</h1>
+      <div className="space-y-32 mt-8">
+        <div className="diff flex flex-col px-16 gap-y-16">
+          <div className="image&desc flex flex-row">
+            <img src={cs} className="cs basis-1/5 max-w-screen-sm ml-[-100px]" />
+            <div className="desc flex flex-col gap-y-8 justify-end">
+              <h1 className="text-4xl font-bold font-poppins text-sky-900">BANGGA EVCS</h1>
               <h1 className="text-xl font-poppins">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
                 et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut

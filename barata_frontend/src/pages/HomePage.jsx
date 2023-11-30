@@ -1,6 +1,6 @@
 import styles from '/src/style.js';
 import {Navbar, Footer, TentangKami, ImgText, TextImg} from '/src/components/shared/company_profile/index.js';
-import app from '/src/assets/app.png';
+import app from '/src/assets/android.jpg';
 import cs from '/src/assets/cs.png';
 import jumbotron from '/src/assets/jumbotron.png';
 
@@ -17,9 +17,6 @@ export default function HomePage() {
             <h1 className = "font-poppins text-white text-md py-6 pt-36 tracking-wider text-right">
                 Bergabunglah bersama kami dalam mengurangi <br/>jejak karbon Anda, satu pengisian sekaligus
             </h1>
-            <a href = '' className = "text-l text-right text-semibold">
-                Lihat lebih detail
-            </a>
 
         </div>
 
