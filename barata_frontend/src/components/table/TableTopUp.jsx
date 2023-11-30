@@ -8,20 +8,9 @@ import {
 import { useState } from 'react';
 import { HiOutlineCheck, HiOutlineX } from "react-icons/hi";
 import Modal from '/src/components/modal/modalFb'
+import StatButton from '/src/components/shared/company_profile/StatButton'
 
 export default function tableTopUp({ source, datefilter }) {
-
-    const [newStatus, setNewStatus] = useState(false)
-
-    const handleAccept = () => {
-        setNewStatus('accept');
-        updateStatus('accept');
-    };
-
-    const handleReject = () => {
-        setNewStatus('reject');
-        updateStatus('reject');
-    };
 
     const filteredData = source.filter((item) => {
         if (datefilter && datefilter.from && datefilter.to) {
@@ -63,10 +52,7 @@ export default function tableTopUp({ source, datefilter }) {
                                 <Modal custKey={item.key} imgPath={item.data.totalPrice[key].imagePath}/>
                             </TableCell>
                             <TableCell key={`confirmation-${cellIndex}`} className="justify-center">
-                                <div className="flex flex-row gap-2 justify-center">
-                                    <button onClick={handleAccept} className="px-2 py-2 text-green-900 text-sm bg-green-200 rounded-lg flex flex-row">Accept</button>
-                                    <button onClick={handleReject} className="px-2 py-2 text-red-900 text-sm bg-red-200 rounded-lg flex flex-row">Reject</button>
-                                </div>
+                                <StatButton status={item.data.totalPrice[key].is_verif}/>
                             </TableCell>
                             <TableCell key={`status-${cellIndex}`} className="text-center">{item.data.totalPrice[key].status}</TableCell>
                         </TableRow>

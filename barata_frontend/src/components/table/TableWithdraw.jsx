@@ -8,6 +8,7 @@ import {
 import { useState } from 'react';
 import check from '/src/assets/check.jpg'
 import cross from '/src/assets/cross.jpg'
+import StatButton from '/src/components/shared/company_profile/StatButton'
 
 export default function tableWithdraw({ source, datefilter }) {
 
@@ -52,10 +53,7 @@ export default function tableWithdraw({ source, datefilter }) {
                             <TableCell key={`createdAt-${cellIndex}`} className="text-center">{item.data.withdraw[key].createdAt}</TableCell>
                             <TableCell key={`amount-${cellIndex}`} className="text-center">{item.data.withdraw[key].amount}</TableCell>
                             <TableCell key={`confirmation-${cellIndex}`} className="justify-center">
-                                <div className="flex flex-row gap-2 justify-center">
-                                    <button onClick={handleAccept} className="px-2 py-2 text-green-900 text-sm bg-green-200 rounded-lg flex flex-row">Accept</button>
-                                    <button onClick={handleReject} className="px-2 py-2 text-red-900 text-sm bg-red-200 rounded-lg flex flex-row">Reject</button>
-                                </div>
+                                <StatButton status={item.data.withdraw[key].is_verif} />
                             </TableCell>
                             <TableCell key={`status-${cellIndex}`} className="text-center">{item.data.withdraw[key].status}</TableCell>
                         </TableRow>

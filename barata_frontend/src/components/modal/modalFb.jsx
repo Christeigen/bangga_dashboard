@@ -18,20 +18,6 @@ export default function Modal(imgPath, custKey) {
         document.body.classList.remove('active-modal')
     }
 
-    // useEffect(() => {
-    //     listAll(ref(imageFB, `proof-of-payment/${imgPath.custKey}`)).then(imgs => {
-    //         console.log("images", imgs)
-    //         imgs.items.forEach(val => {
-    //             console.log("val", val)
-    //             console.log("getdownload", getDownloadURL(val))
-    //             getDownloadURL(val).then(url => {
-    //                 setImgUrl(data => [...data, url])
-    //                 console.log("url", url)
-    //             })
-    //         })
-    //     })
-    // }, [])
-
     useEffect(() => {
         listAll(ref(imageFB, `proof-of-payment/${imgPath.custKey}`)).then(imgs => {
             imgs.items.forEach(val => {
