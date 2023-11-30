@@ -6,7 +6,8 @@ import {
     HiOutlineHome,
 	HiOutlineChartSquareBar,
 	HiOutlineLightningBolt,
-	HiTrendingUp
+	HiTrendingUp,
+	HiShieldCheck
 } from 'react-icons/hi'
 
 export const DASHBOARD_SIDEBAR_LINKS = [
@@ -33,6 +34,12 @@ export const DASHBOARD_SIDEBAR_LINKS = [
 		label: 'Charging Station',
 		path: '/chargingstation',
 		icon: <HiOutlineLightningBolt />
+	},
+	{
+		key: 'adminverification',
+		label: 'Admin Verification',
+		path: '/adminverification',
+		icon: <HiShieldCheck />
 	}
 ]
 

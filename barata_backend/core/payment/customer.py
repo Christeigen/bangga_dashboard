@@ -188,13 +188,13 @@ def add_firebase_payment_request(pr_data, user_id):
     db.child("payment_request").child(customerId).child(id).set(data_fb)
 
 
-def add_firebase_payment_request_v2(customerId, amount, payment_request_id, expired_at):
+def add_firebase_payment_request_v2(customerId, amount, payment_request_id, expired_at, order_date):
    
         data_fb = {
             "paymentMethodId" : "0",
             "amount": amount,
             "ewallet":"BANGGA-PAY",
-            "successDate" : 0,
+            "successDate" : order_date,
             "expired_at" : expired_at, 
             "status": 100,
             "action": "0"

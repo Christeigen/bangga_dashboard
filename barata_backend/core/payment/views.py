@@ -259,7 +259,7 @@ class PaymentRequestCreateEMoneyView(APIView):
                             payment_request_id = random_string
 
 
-                            customer.add_firebase_payment_request_v2(customer_id, amount, payment_request_id, expired_at)
+                            customer.add_firebase_payment_request_v2(customer_id, amount, payment_request_id, expired_at, order_date)
 
                             customer.add_new_book_v2(book_id, cs_id, user_id, duration, status_book, price, payment_request_id, order_date, expired_at)
 

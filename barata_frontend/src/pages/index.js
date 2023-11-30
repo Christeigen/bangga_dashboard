@@ -8,6 +8,7 @@ import HomePage from './HomePage';
 import TentangKamiPage from './TentangKamiPage';
 import ProductPage from './ProductPage';
 import ApplicationPage from './ApplicationPage'
+import AdminVerif from './AdminVerif';
 
 export {
     Dashboard,
@@ -19,7 +20,8 @@ export {
     HomePage,
     TentangKamiPage,
     ProductPage,
-    ApplicationPage
+    ApplicationPage,
+    AdminVerif
 }
 
 
