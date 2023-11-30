@@ -23,19 +23,20 @@ export default function TentangKamiPage() {
                 <TentangKami /> 
                 <ImgText 
                     title="Universitas Airlangga"
-                    paragraph="Stasiun Pengisian Kendaraan Listrik (EVCS) adalah kunci untuk masa depan yang lebih berkelanjutan. Temukan mengapa EVCS adalah solusi penting dalam mengurangi emisi karbon, menghemat biaya, dan memajukan transportasi berkelanjutan."
+                    paragraph="Universitas Airlangga ( UNAIR ) merupakan perguruan tinggi negeri yang terletak di Surabaya, Jawa Timur. 
+                    Dengan visi menjadi universitas yang mandiri, inovatif, terkemuka di tingkat nasional dan internasional, pelopor pengembangan ilmu pengetahuan, teknologi, humaniora dan seni berdasarkan moral agama."
                     imgSrc={about_us_unair}
                     imgAlt="universitas airlangga"
                     showButton={false}
-                    isSquare = {false}
+                    isSquare = {true}
                 />
                 <TextImg 
                     title="PT Barata Indonesia"
-                    paragraph="Stasiun Pengisian Kendaraan Listrik (EVCS) adalah kunci untuk masa depan yang lebih berkelanjutan. Temukan mengapa EVCS adalah solusi penting dalam mengurangi emisi karbon, menghemat biaya, dan memajukan transportasi berkelanjutan."
+                    paragraph="PT Barata Indonesia (Persero) merupakan salah satu Badan Usaha Milik Negara (BUMN) dengan kepemilikan saham 100% oleh Pemerintah Republik Indonesia yang yang bergerak di bidang industri manufaktur guna mendukung sektor Food, Energy, dan Water."
                     imgSrc={about_us_barata}
                     imgAlt="barata indonesia"
                     showButton={false}
-                    isSquare = {false}
+                    isSquare = {true}
                 />
             </div>
         </div>

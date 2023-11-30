@@ -25,24 +25,24 @@ export const navLinks = [
 export const features = [
   {
     id: "feature_1",
-    icon: keunggulan_1,
-    title: "Harga Lebih Terjangkau",
+    icon: keunggulan_3,
+    title: "Produk Karya Anak Bangsa",
     content:
-      "Pastikan dapat harga termurah dengan harga 70 ribu/ jam",
+      "Tingkat kandungan dalam negeri > 40%. Dirancang dan dikembangkan dengan tekad anak bangsa",
   },
   {
     id: "feature_2",
     icon: keunggulan_2,
     title: "Cepat & Efisien",
     content:
-      "Pengisian daya 100% dalam waktu 1 jam saja",
+      "Technical support dari dalam negeri dan spare part tersedia di pasar Indonesia",
   },
   {
     id: "feature_3",
-    icon: keunggulan_3,
-    title: "Mudah Diakses",
+    icon: keunggulan_1,
+    title: "Akses Mudah, Transaksi Aman",
     content:
-      "120 charging station tersebar di sekitarmu",
+      "Charging station tersebar di sekitarmu. Proses transaksi aman, mudah dan terpercaya",
   },
 ];
 

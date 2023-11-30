@@ -1,6 +1,7 @@
 import { features } from "/src/constants/index"; 
 import styles, {layout} from '/src/style.js';
 import Button from './Button'
+import { Link } from 'react-router-dom';
 
 const FeatureCard = ({ icon, title, content, index }) => (
   // <div className={`flex flex-row p-6 rounded-[20px] ${index !== features.length - 1 ? "mb-6" : "mb-0"} feature-card`}>
@@ -19,7 +20,7 @@ const FeatureCard = ({ icon, title, content, index }) => (
   </div>
 );
 
-export default function TentangKami() {
+export default function TentangKami({targetUrl}) {
   return (
     <section id  = "keunggulan" className = {layout.section}>
       <div className = {layout.sectionInfo}>
@@ -27,10 +28,11 @@ export default function TentangKami() {
           Tentang Kami
         </h2>
         <p className = {`${styles.paragraph} max-w-[470px] mt-5`}>
-        Stasiun Pengisian Kendaraan Listrik (EVCS) adalah kunci untuk masa depan yang lebih berkelanjutan. 
-        Temukan mengapa EVCS adalah solusi penting dalam mengurangi emisi karbon, menghemat biaya, dan memajukan transportasi berkelanjutan.
+        BANGGA EVCS (Barata-Airlangga Electric Vehicle Charging Station) merupakan produk hasil pengembangan dari kerjasama antara Fakultas Teknologi Maju dan Multidisiplin (FTMM) Universitas Airlangga dengan PT. Barata Indonesia (Persero) melalui skema Matching Fund 2023.
         </p>
-        <Button styles = "mt-10"/>
+        <Link to={targetUrl}>
+          <Button styles="mt-10" /> 
+        </Link>
       </div>
 
       <div className={`${layout.sectionImg} flex-col`}>

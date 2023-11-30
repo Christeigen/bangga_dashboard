@@ -2,7 +2,7 @@ import styles from '/src/style.js';
 import {Navbar, Footer, TentangKami, ImgText, TextImg} from '/src/components/shared/company_profile/index.js';
 import app from '/src/assets/android.jpg';
 import cs from '/src/assets/cs.png';
-import jumbotron from '/src/assets/jumbotron.png';
+import jumbotron from '/src/assets/jumbotron_1.png';
 
 export default function HomePage() {
   return (
@@ -22,7 +22,9 @@ export default function HomePage() {
 
         <div className = {`bg-white ${styles.paddingX} ${styles.flexStart}`}>
             <div className = {`${styles.boxWidth}`}>
-                <TentangKami /> 
+                <TentangKami 
+                    targetUrl = "http://localhost:5173/tentang-kami"
+                /> 
                 <ImgText 
                     title="Charging Station"
                     paragraph="Stasiun Pengisian Kendaraan Listrik (EVCS) adalah kunci untuk masa depan yang lebih berkelanjutan. Temukan mengapa EVCS adalah solusi penting dalam mengurangi emisi karbon, menghemat biaya, dan memajukan transportasi berkelanjutan."
@@ -30,6 +32,7 @@ export default function HomePage() {
                     imgAlt="charging station"
                     showButton={true}
                     isSquare = {true}
+                    targetUrl = "http://localhost:5173/produk"
                 />
                 <TextImg 
                     title="Aplikasi"
@@ -38,6 +41,7 @@ export default function HomePage() {
                     imgAlt="aplikasi"
                     showButton={true}
                     isSquare = {true}
+                    targetUrl = "http://localhost:5173/aplikasi"
                 />
             </div>
         </div>

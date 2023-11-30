@@ -73,7 +73,7 @@ const ApplicationPage = () => {
                         isSquare={true} />
                 </div>
             </div>
-            <div className="downloadPart bg-white rounded-[70px] mt-[-100px] flex flex-row pt-[10px]">
+            <div className="downloadPart bg-white rounded-[70px] mt-[-100px] flex justify-center pt-[10px]">
                 <div className="self-center ml-[150px] flex flex-col gap-y-8">
                     <h1 className="text-6xl font-bold text-sky-900 text-left">Download <br /> Aplikasi</h1>
                     <h1 className="text-xl">Segera bergabung dengan kami, mari <br /> hijaukan negeri ini dengan Bangga</h1>

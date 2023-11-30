@@ -63,7 +63,7 @@ const table2 = [
   },
   {
     name: "Charging interface",
-    spesifications: "IEC 62196, Tyoe 2",
+    spesifications: "IEC 62196, Type 2",
   },
   {
     name: "Operating Temperature",
@@ -79,34 +79,34 @@ const ProductPage = () => {
       </div>
       <div className="space-y-32 mt-8">
         <div className="diff flex flex-col px-16 gap-y-16">
-          <div className="image&desc flex flex-row">
-            <img src={cs} className="cs basis-1/5 max-w-screen-sm ml-[-100px]" />
-            <div className="desc flex flex-col gap-y-8 justify-end">
+          <div className="image&desc flex justify-center items-center">
+            <img src={cs} className="cs basis-1/2 max-w-screen-sm ml-[100px] mb-[50px]" />
+            <div className="desc flex flex-col gap-y-8 justify-center max-w-1/2 mr-[100px]">
               <h1 className="text-4xl font-bold font-poppins text-sky-900">BANGGA EVCS</h1>
               <h1 className="text-xl font-poppins">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-                dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-                officia deserunt mollit anim id est laborum.
+                Bangga EVCS merupakan platform charging station yang dilengkapi dengan mobile application sehingga memudahkan pengguna dalam melakukan transaksi energi, tracking, dan memudahkan dalam mengetahui status dan lokasi Charging Station terdekat. 
+                Aplikasi ini juga memfasilitasi transaksi sewa-menyewa Charging Station.
               </h1>
-              <div className="strenght flex flex-row justify-center gap-x-32">
+              <h1 className="text-xl font-poppins">
+                Bangga EVCS telah memenuhi standar PerMen ESDM No. 13 Tahun 2020, diantaranya adalah Over Current Protection, Protective Earth Conductor (Earthing System), Over/Under Voltage and Frequency Protection
+              </h1>
+              <div className="strenght flex flex-row justify-center gap-x-32 mt-[30px]">
                 <div className="flex flex-col gap-y-5">
                   <img src={cheap} className="w-24 h-24" />
-                  <h1 className="text-center text-black font-bold text-2xl">Harga <br/> Terjangkau</h1>
+                  <h1 className="text-center text-black font-bold  font-poppins text-2xl">Harga <br/> Terjangkau</h1>
                 </div>
                 <div className="flex flex-col gap-y-5">
                   <img src={efficient} className="w-24 h-24" />
-                  <h1 className="text-center text-black font-bold text-2xl">Cepat dan <br/> Efisien</h1>
+                  <h1 className="text-center text-black font-bold font-poppins text-2xl">Cepat dan <br/> Efisien</h1>
                 </div>
                 <div className="flex flex-col gap-y-5">
                   <img src={easy} className="w-24 h-24" />
-                  <h1 className="text-center text-black font-bold text-2xl">Mudah <br/> diakses</h1>
+                  <h1 className="text-center text-black font-bold font-poppins text-2xl">Mudah <br/> diakses</h1>
                 </div>
               </div>
             </div>
           </div>
-          <div className="Spesifications flex flex-col gap-y-5">
+          <div className="Spesifications flex flex-col gap-y-5 mx-[150px]">
             <h1 className="text-4xl italic font-bold text-sky-900">Spesifikasi</h1>
             <Grid numItemsMd={2} className="gap-x-8 gap-y-2">
               <div>
