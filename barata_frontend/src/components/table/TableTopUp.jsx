@@ -41,22 +41,29 @@ export default function tableTopUp({ source, datefilter }) {
             </TableRow>
             <TableBody>
                 {filteredData.map((item, index) => (
-                    Object.keys(item.data.totalPrice).map((key, cellIndex) => (
-                        <TableRow key={`${index}-${cellIndex}`}>
-                            <TableCell key={`name-${cellIndex}`} className="text-left">{item.data.totalPrice[key].name}</TableCell>
-                            <TableCell key={`noRek-${cellIndex}`} className="text-center">{item.data.totalPrice[key].noRek}</TableCell>
-                            <TableCell key={`createdAt-${cellIndex}`} className="text-center">{item.data.totalPrice[key].createdAt}</TableCell>
-                            <TableCell key={`amount-${cellIndex}`} className="text-center">{item.data.totalPrice[key].amount}</TableCell>
-                            <TableCell key={`imgpath-${cellIndex}`} className="text-center">{item.data.totalPrice[key].imagePath}</TableCell>
-                            <TableCell key={`paymentReceipt-${cellIndex}`} className="text-center">
-                                <Modal custKey={item.key} imgPath={item.data.totalPrice[key].imagePath}/>
-                            </TableCell>
-                            <TableCell key={`confirmation-${cellIndex}`} className="justify-center">
-                                <StatButton status={item.data.totalPrice[key].is_verif}/>
-                            </TableCell>
-                            <TableCell key={`status-${cellIndex}`} className="text-center">{item.data.totalPrice[key].status}</TableCell>
-                        </TableRow>
-                    ))
+                    Object.keys(item.data.totalPrice).map((key, cellIndex) => {
+
+                        return (
+                            <TableRow key={`${index}-${cellIndex}`}>
+                                <TableCell key={`name-${cellIndex}`} className="text-left">{item.data.totalPrice[key].name}</TableCell>
+                                <TableCell key={`noRek-${cellIndex}`} className="text-center">{item.data.totalPrice[key].noRek}</TableCell>
+                                <TableCell key={`createdAt-${cellIndex}`} className="text-center">{item.data.totalPrice[key].createdAt}</TableCell>
+                                <TableCell key={`amount-${cellIndex}`} className="text-center">{item.data.totalPrice[key].amount}</TableCell>
+                                <TableCell key={`imgpath-${cellIndex}`} className="text-center">{item.data.totalPrice[key].imagePath}</TableCell>
+                                <TableCell key={`paymentReceipt-${cellIndex}`} className="text-center">
+                                    <Modal custKey={item.key} imgPath={item.data.totalPrice[key].imagePath}/>
+                                </TableCell>
+                                <TableCell key={`confirmation-${cellIndex}`} className="justify-center">
+                                    <StatButton 
+                                        customer_id={item.key}
+                                        withdraw_id={key}
+                                        status={item.data.totalPrice[key].is_verif}
+                                    />
+                                </TableCell>
+                                <TableCell key={`status-${cellIndex}`} className="text-center">{item.data.totalPrice[key].status}</TableCell>
+                            </TableRow>
+                        );
+                    })
                 ))}
             </TableBody>
         </Table>
