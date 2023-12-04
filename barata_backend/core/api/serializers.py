@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from api.models import BookData, ChargingStationData, CustomersData, MitraData
 
 class MultipleEmailField(serializers.Field):
     def to_internal_value(self, data):
@@ -19,12 +20,24 @@ class EmailAttachmentSerializer(serializers.Serializer):
     message = serializers.CharField()
     attachment = serializers.FileField(required=False)
 
-class PaymentCreateSerializer(serializers.Serializer):
-    type = serializers.CharField(max_length=20)
-    user_number = serializers.CharField(max_length=20)
+class BookDataSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=BookData
+        fields=('primaryKey','csId','customerId','duration','expiredAt','orderDate' ,'paymentRequestId','socketId'  ,'status','totalPrice')
+        
+class ChargingStationDataSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=ChargingStationData
+        fields=('primaryKey','csId','desc','idMitra' ,'kabupaten','lat','location','longt','name','path','price','provinsi','status')
 
-    
-class PaymentRequestSerializer(serializers.Serializer):
-    payment_method_id = serializers.CharField(max_length=20)
-    amount = serializers.DecimalField(max_digits=10, decimal_places=2)
+class CustomersDataSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=CustomersData
+        fields=('primaryKey','fcmToken','bookActive','customerId','email', 'phoneNumber','username')
+
+class MitraDataSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=MitraData
+        fields=('primaryKey','fcmToken','email', 'nama','phoneNumber')
+
 
