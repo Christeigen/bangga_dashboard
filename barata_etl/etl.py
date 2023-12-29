@@ -50,7 +50,7 @@ def insert_data(cursor, table_name, data):
 firebase_url = 'https://chargingstation-17519-default-rtdb.firebaseio.com'
 
 # MySQL connection parameters
-db_params = {'host': 'localhost', 'database': 'bangga', 'user': 'bangga', 'password': 'Bangga#12345'}
+db_params = {'host': 'localhost', 'database': 'bangga', 'user': 'bangga', 'password': 'Bangga#12345', 'auth_plugin': 'mysql_native_password'}
 
 # Define tables for each database
 tables = {
