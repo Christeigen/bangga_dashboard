@@ -16,7 +16,7 @@ def create_table(cursor, table_name):
     if table_name == "bookData":
         columns = 'primaryKey VARCHAR(255), csId VARCHAR(10), customerId VARCHAR(255), duration INT, expiredAt BIGINT, orderDate BIGINT, paymentRequestId VARCHAR(50), socketId VARCHAR(10), status INT, totalPrice INT'
     elif table_name == "chargingstationData":
-        columns = 'primaryKey VARCHAR(255), csId VARCHAR(10), desc VARCHAR(255), idMitra VARCHAR(255), kabupaten VARCHAR(50), lat VARCHAR(50), location VARCHAR(255), longt VARCHAR(50), name VARCHAR(100), path VARCHAR(255), price INT, provinsi VARCHAR(50), status INT'
+        columns = 'primaryKey VARCHAR(255), csId VARCHAR(10), description VARCHAR(255), idMitra VARCHAR(255), kabupaten VARCHAR(50), lat VARCHAR(50), location VARCHAR(255), longt VARCHAR(50), name VARCHAR(100), path VARCHAR(255), price INT, provinsi VARCHAR(50), status INT'
     elif table_name == "customersData":
         columns = 'primaryKey VARCHAR(255), fcmToken VARCHAR(255), bookActive VARCHAR(5), customerId VARCHAR(255), email VARCHAR(255), phoneNumber VARCHAR(20), username VARCHAR(50)'
     elif table_name == "mitraData":

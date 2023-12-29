@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./Modal.css";
+import "./modal.css";
 import { HiOutlineCheck, HiOutlineX } from "react-icons/hi";
 import { imageFB } from '/src/firebase.jsx';
 import { getDownloadURL, listAll, ref, uploadBytes } from "firebase/storage";

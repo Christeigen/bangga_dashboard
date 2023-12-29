@@ -26,7 +26,6 @@ export default function Footer() {
                     key={link.name}
                     className={`font-poppins font-normal text-[14px] leading-[24px] text-gray-50 hover:text-yellow-500 cursor-pointer ${index !== footerlink.links.length - 1 ? "mb-4" : "mb-0"
                       }`}
-                    path={`/${link.link.split("/").slice(-2)[0]}`}
                   >
                     {link.name}
                   </li>
